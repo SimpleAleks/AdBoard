@@ -15,12 +15,12 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Domain.Category.Ca
         builder.Property(category => category.Name).HasMaxLength(64).IsRequired();
         
         // Configure relationships
-        builder.HasOne<Domain.Category.Category>()
+        builder.HasOne(category => category.Parent)
             .WithMany(x => x.Childs)
             .HasForeignKey(x => x.ParentId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasMany<Domain.Advert.Advert>()
+        builder.HasMany(category => category.Adverts)
             .WithOne(advert => advert.Category)
             .HasForeignKey(advert => advert.CategoryId)
             .OnDelete(DeleteBehavior.Cascade);

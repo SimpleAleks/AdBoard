@@ -22,7 +22,7 @@ public class AdvertConfiguration : IEntityTypeConfiguration<Domain.Advert.Advert
         builder.HasKey(a => a.Id);
         builder.Property(a => a.Name).HasMaxLength(256).IsRequired();
         builder.Property(a => a.Description).HasMaxLength(1024);
-        builder.Property(advert => advert.Cost);
+        builder.Property(a => a.Cost);
         builder.Property(a => a.Created).HasConversion(d => d, d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
         builder.Property(a => a.Email).HasMaxLength(64);
         builder.Property(a => a.Location).HasMaxLength(256).IsRequired();
@@ -30,22 +30,22 @@ public class AdvertConfiguration : IEntityTypeConfiguration<Domain.Advert.Advert
 
         // Configuring relations
         // User
-        builder.HasOne<Domain.User.User>()
+        builder.HasOne(advert => advert.User)
             .WithMany(user => user.Adverts)
             .HasForeignKey(advert => advert.UserId)
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
         
         // Images
-        builder.HasMany<Domain.Image.Image>()
+        builder.HasMany(advert => advert.Images)
             .WithOne(image => image.Advert)
             .HasForeignKey(image => image.AdvertId)
             .OnDelete(DeleteBehavior.Cascade);
 
         // Category
-        builder.Property(a => a.Category).IsRequired();
-        builder.Property(a => a.CategoryId).IsRequired();
-        builder.HasOne<Domain.Category.Category>()
+        builder.Property(advert => advert.Category).IsRequired();
+        builder.Property(advert => advert.CategoryId).IsRequired();
+        builder.HasOne(advert => advert.Category)
             .WithMany(category => category.Adverts)
             .HasForeignKey(advert => advert.CategoryId)
             .OnDelete(DeleteBehavior.Cascade)
