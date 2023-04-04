@@ -45,8 +45,6 @@ public class AdvertConfiguration : IEntityTypeConfiguration<Domain.Advert.Advert
             .OnDelete(DeleteBehavior.Cascade);
 
         // Category
-        builder.Property(advert => advert.Category).IsRequired();
-        builder.Property(advert => advert.CategoryId).IsRequired();
         builder.HasOne(advert => advert.Category)
             .WithMany(category => category.Adverts)
             .HasForeignKey(advert => advert.CategoryId)
