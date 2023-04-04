@@ -12,13 +12,11 @@ public class ImageConfiguration : IEntityTypeConfiguration<Domain.Image.Image>
     {
         builder.HasKey(i => i.Id);
         builder.Property(i => i.Content).IsRequired();
-        
-        builder.Property(i => i.Advert).IsRequired();
-        builder.Property(i => i.AdvertId).IsRequired();
 
         builder.HasOne(i => i.Advert)
             .WithMany(a => a.Images)
             .HasForeignKey(i => i.AdvertId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired();
     }
 }

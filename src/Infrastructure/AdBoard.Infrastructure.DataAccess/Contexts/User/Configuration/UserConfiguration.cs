@@ -16,7 +16,6 @@ public class UserConfiguration : IEntityTypeConfiguration<Domain.User.User>
         builder.HasMany(u => u.Adverts)
             .WithOne(a => a.User)
             .HasForeignKey(a => a.UserId)
-            .OnDelete(DeleteBehavior.Cascade)
-            .IsRequired();
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

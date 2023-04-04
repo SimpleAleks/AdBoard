@@ -14,6 +14,18 @@ services:
     depends_on:
       - "postgres"
 
+  migrator:
+    container_name: adboard-migrator
+    build:
+      context: .
+      dockerfile: src/Host/AdBoard.Host.Migrator/Dockerfile
+    environment:
+      - ConnectionStrings__PostgresBoardDb=Server=postgres;Database=Board;Username=postgres;Password=password;Port=5432
+    networks:
+      - adboard-network
+    depends_on:
+      - "postgres"
+
   postgres:
     image: postgres
     environment:
@@ -26,3 +38,6 @@ services:
 
 volumes:
   pg-data:
+    
+networks:
+  adboard-network:
