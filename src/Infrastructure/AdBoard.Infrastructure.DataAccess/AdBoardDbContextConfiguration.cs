@@ -36,5 +36,6 @@ public class AdBoardDbContextConfiguration : IDbContextOptionsConfigurator<AdBoa
                 $"Не найдена строка подключения с именем '{PostgresConnectionStringName}'");
         options.UseNpgsql(connectionString);
         options.UseLoggerFactory(_loggerFactory);
+        options.UseLazyLoadingProxies();
     }
 }

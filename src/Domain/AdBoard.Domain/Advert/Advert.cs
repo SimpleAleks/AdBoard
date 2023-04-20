@@ -8,17 +8,17 @@ public class Advert
     /// <summary>
     /// Id.
     /// </summary>
-    public Guid Id { get; set; }
+    public Guid? Id { get; set; }
     
     /// <summary>
     /// ID пользователя, создавшего объявление
     /// </summary>
-    public Guid UserId { get; set; }
+    public Guid? UserId { get; set; }
     
     /// <summary>
     /// Навигационное свойство на <see cref="User"/>
     /// </summary>
-    public virtual User.User User { get; set; }
+    public virtual User.User? User { get; set; }
     
     /// <summary>
     /// Название.
@@ -28,7 +28,7 @@ public class Advert
     /// <summary>
     /// Описание.
     /// </summary>
-    public string Description { get; set; }
+    public string? Description { get; set; }
     
     /// <summary>
     /// Изображения объявлений
@@ -43,12 +43,12 @@ public class Advert
     /// <summary>
     /// Email.
     /// </summary>
-    public string Email { get; set; }
+    public string? Email { get; set; }
     
     /// <summary>
     /// Телефон.
     /// </summary>
-    public string Phone { get; set; }
+    public string? Phone { get; set; }
     
     /// <summary>
     /// Геолокация объявления
@@ -63,10 +63,10 @@ public class Advert
     /// <summary>
     /// Id категории.
     /// </summary>
-    public Guid CategoryId { get; set; }
+    public Guid? CategoryId { get; set; }
     
     /// <summary>
     /// Навигационное свойство на категорию.
     /// </summary>
-    public virtual Category.Category Category { get; set; }
+    public virtual Category.Category? Category { get; set; }
 }

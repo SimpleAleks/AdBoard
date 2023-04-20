@@ -2,9 +2,13 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\Documentation.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,6 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Contracts\AdBoard.Contracts\AdBoard.Contracts.csproj" />
       <ProjectReference Include="..\..\Infrastructure\AdBoard.Infrastructure.DataAccess\AdBoard.Infrastructure.DataAccess.csproj" />
       <ProjectReference Include="..\..\Infrastructure\AdBoard.Infrastructure\AdBoard.Infrastructure.csproj" />
     </ItemGroup>

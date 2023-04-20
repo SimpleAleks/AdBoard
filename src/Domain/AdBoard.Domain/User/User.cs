@@ -7,7 +7,7 @@ public class User
     /// <summary>
     /// ID пользователя
     /// </summary>
-    public Guid Id { get; set; }
+    public Guid? Id { get; set; }
     
     /// <summary>
     /// Имя

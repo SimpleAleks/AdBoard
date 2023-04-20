@@ -17,12 +17,16 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Domain.Category.Ca
         // Configure relationships
         builder.HasOne(category => category.Parent)
             .WithMany(x => x.Childs)
-            .HasForeignKey(x => x.ParentId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .HasForeignKey(category => category.ParentId)
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired(false);
+
+        // builder.Property(category => category.ParentId).IsRequired(false);
 
         builder.HasMany(category => category.Adverts)
             .WithOne(advert => advert.Category)
             .HasForeignKey(advert => advert.CategoryId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired(false);
     }
 }
