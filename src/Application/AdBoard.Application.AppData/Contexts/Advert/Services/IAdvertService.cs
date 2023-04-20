@@ -43,5 +43,5 @@ public interface IAdvertService
     /// </summary>
     /// <param name="id">Идентификатор</param>
     /// <param name="cancellationToken">Токен отмены</param>
-    Task Delete(Guid id, CancellationToken cancellationToken);
+    Task<bool> Delete(Guid id, CancellationToken cancellationToken);
 }

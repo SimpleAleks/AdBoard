@@ -40,8 +40,8 @@ public class AdvertService : IAdvertService
         return _repository.Update(id, entity, cancellationToken);
     }
 
-    public async Task Delete(Guid id, CancellationToken cancellationToken)
+    public async Task<bool> Delete(Guid id, CancellationToken cancellationToken)
     {
-        await _repository.Delete(id, cancellationToken);
+        return await _repository.Delete(id, cancellationToken);
     }
 }

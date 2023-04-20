@@ -122,7 +122,8 @@ public class AdvertController : ControllerBase
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
     {
-        await _service.Delete(id, cancellationToken);
-        return NoContent();
+        var isRemoved = await _service.Delete(id, cancellationToken);
+        if (isRemoved) return NoContent();
+        return NotFound();
     }
 }

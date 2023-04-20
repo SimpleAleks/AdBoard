@@ -50,10 +50,11 @@ public class AdvertRepository : IAdvertRepository
         return _mapper.Map<Advert, ShortAdvertDto>(advert);
     }
 
-    public async Task Delete(Guid id, CancellationToken cancellationToken)
+    public async Task<bool> Delete(Guid id, CancellationToken cancellationToken)
     {
         var entity = await _repository.GetByIdAsync(id, cancellationToken);
-        if (entity is null) return;
+        if (entity is null) return false;
         await _repository.DeleteAsync(entity, cancellationToken);
+        return true;
     }
 }
