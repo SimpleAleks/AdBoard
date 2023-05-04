@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DocumentationFile>bin\Debug\Documentation.xml</DocumentationFile>
+      <DocumentationFile>Documentation.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>

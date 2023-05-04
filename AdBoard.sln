@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdBoard.Host.Api", "src\Hos
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdBoard.Host.Migrator", "src\Host\AdBoard.Host.Migrator\AdBoard.Host.Migrator.csproj", "{4A92BAA4-E762-4561-B419-5678A7A2DA2A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdBoard.Api.Tests", "src\Tests\AdBoard.Api.Tests\AdBoard.Api.Tests.csproj", "{7163FECF-CB40-42D8-9F4F-FCEA168192B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +50,9 @@ Global
 		{4A92BAA4-E762-4561-B419-5678A7A2DA2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A92BAA4-E762-4561-B419-5678A7A2DA2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A92BAA4-E762-4561-B419-5678A7A2DA2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7163FECF-CB40-42D8-9F4F-FCEA168192B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7163FECF-CB40-42D8-9F4F-FCEA168192B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7163FECF-CB40-42D8-9F4F-FCEA168192B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7163FECF-CB40-42D8-9F4F-FCEA168192B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -46,6 +46,12 @@ public class AdvertRepository : IAdvertRepository
     public async Task<ShortAdvertDto> Update(Guid id, Advert advert, CancellationToken cancellationToken)
     {
         advert.Id = id;
+        var dbAdvertImages = await _repository.GetAll()
+            .Where(x => x.Id == id)
+            .Include(x => x.Images)
+            .Select(x => x.Images)
+            .FirstOrDefaultAsync(cancellationToken);
+        advert.Images = dbAdvertImages ?? Array.Empty<Domain.Image.Image>();
         await _repository.UpdateAsync(advert, cancellationToken);
         return _mapper.Map<Advert, ShortAdvertDto>(advert);
     }

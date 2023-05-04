@@ -35,7 +35,15 @@ public class AdvertProfile : Profile
             .ForMember(x => x.CategoryId, map => map.MapFrom(d => d.CategoryId))
             .ForMember(x => x.Category, map => map.Ignore());
 
-        CreateMap<UpdateAdvertDto, Advert>().IncludeBase<CreateAdvertDto, Advert>();
+        CreateMap<UpdateAdvertDto, Advert>(MemberList.None)
+            .ForMember(x => x.UserId, map => map.MapFrom(d => d.UserId))
+            .ForMember(x => x.Name, map => map.MapFrom(d => d.Name))
+            .ForMember(x => x.Description, map => map.MapFrom(d => d.Description))
+            .ForMember(x => x.Cost, map => map.MapFrom(d => d.Cost))
+            .ForMember(x => x.Email, map => map.MapFrom(d => d.Email))
+            .ForMember(x => x.Phone, map => map.MapFrom(d => d.Phone))
+            .ForMember(x => x.Created, map => map.MapFrom(d => DateTime.UtcNow))
+            .ForMember(x => x.CategoryId, map => map.MapFrom(d => d.CategoryId));
 
         CreateMap<Advert, AdvertDto>()
             .ForMember(d => d.Id, map => map.MapFrom(s => s.Id))

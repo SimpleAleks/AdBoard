@@ -58,7 +58,7 @@ public class Advert
     /// <summary>
     /// Дата создания.
     /// </summary>
-    public DateTime Created { get; set; }
+    public DateTime? Created { get; set; }
     
     /// <summary>
     /// Id категории.

@@ -70,5 +70,204 @@
             <response code="403">Нет доступа</response>
             <response code="404">Объявление с таким ID не найдено</response>
         </member>
+        <member name="T:AdBoard.Host.Api.Controllers.CategoriesController">
+            <summary>
+            Контроллер для работы с категориями
+            </summary>
+            <response code="500">Произошла внутрення ошибка</response>
+        </member>
+        <member name="M:AdBoard.Host.Api.Controllers.CategoriesController.#ctor(AdBoard.Application.AppData.Contexts.Category.Services.ICategoryService,Microsoft.Extensions.Logging.ILogger{AdBoard.Host.Api.Controllers.CategoriesController})">
+            <summary>
+            Инициализирует контроллер
+            </summary>
+            <param name="service">Сервис по работе с категориями</param>
+            <param name="logger">Логгер</param>
+        </member>
+        <member name="M:AdBoard.Host.Api.Controllers.CategoriesController.GetAll(System.Threading.CancellationToken)">
+            <summary>
+            Вернуть все категории
+            </summary>
+            <param name="cancellationToken">Токен отмены</param>
+            <response code="200">Запрос выполнен успешно</response>
+            <returns>Список категорий</returns>
+        </member>
+        <member name="M:AdBoard.Host.Api.Controllers.CategoriesController.GetById(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Получить категорию по id
+            </summary>
+            <param name="id">Идентификатор категории</param>
+            <param name="cancellationToken">Токен отмены</param>
+            <response code="200">Запрос выполнен успешно</response>
+            <response code="404">Категория с таким id не найдена</response>
+            <returns>Модель категории <see cref="T:AdBoard.Contracts.Category.CategoryDto"/></returns>
+        </member>
+        <member name="M:AdBoard.Host.Api.Controllers.CategoriesController.Create(AdBoard.Contracts.Category.CreateCategoryDto,System.Threading.CancellationToken)">
+            <summary>
+            Создаёт категорию по модели
+            </summary>
+            <param name="dto">Модель для создания категории</param>
+            <param name="cancellationToken">Токен отмены</param>
+            <response code="201">Категория успешно создана</response>
+            <response code="400">Модель данных запроса невалидна</response>
+            <response code="422">Произошёл конфликт бизнес логики</response>
+            <returns>Модель созданной категории <see cref="T:AdBoard.Contracts.Category.ShortCategoryDto"/></returns>
+        </member>
+        <member name="M:AdBoard.Host.Api.Controllers.CategoriesController.Update(System.Guid,AdBoard.Contracts.Category.UpdateCategoryDto,System.Threading.CancellationToken)">
+            <summary>
+            Обновляет категорию по модели
+            </summary>
+            <param name="id">Идентификатор обновляемой категории</param>
+            <param name="dto">Модель категории</param>
+            <param name="cancellationToken">Токен отмены</param>
+            <response code="200">Запрос успешно выполнен</response>
+            <response code="400">Модель невалидна</response>
+            <response code="403">Доступ запрещен</response>
+            <response code="404">Категория не найдена</response>
+            <response code="422">Конфликт бизнес логики</response>
+            <returns>Модель обновленной категории <see cref="T:AdBoard.Contracts.Category.ShortCategoryDto"/></returns>
+        </member>
+        <member name="M:AdBoard.Host.Api.Controllers.CategoriesController.Delete(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Удаляет категорию по ID
+            </summary>
+            <param name="id">Идентификатор категории</param>
+            <param name="cancellationToken">Токен отмены</param>
+            <response code="204">Удаление произведено успешно</response>
+            <response code="403">Нет доступа</response>
+            <response code="404">Категория с таким ID не найдена</response>
+        </member>
+        <member name="T:AdBoard.Host.Api.Controllers.ImagesController">
+            <summary>
+            Контроллер для работы с <see cref="T:AdBoard.Domain.Image.Image"/>
+            </summary>
+            <response code="500">Произошла внутрення ошибка</response> 
+        </member>
+        <member name="M:AdBoard.Host.Api.Controllers.ImagesController.#ctor(AdBoard.Application.AppData.Contexts.Image.Services.IImageService,Microsoft.Extensions.Logging.ILogger{AdBoard.Host.Api.Controllers.ImagesController})">
+            <summary>
+            Инициализирует контроллер <see cref="T:AdBoard.Domain.Image.Image"/>
+            </summary>
+            <param name="service">Сервис для работы с изображениями</param>
+            <param name="logger">Логгер</param>
+        </member>
+        <member name="M:AdBoard.Host.Api.Controllers.ImagesController.GetById(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Получить изображение по id
+            </summary>
+            <param name="id">Идентификатор изображения</param>
+            <param name="cancellationToken">Токен отмены</param>
+            <response code="200">Запрос выполнен успешно</response>
+            <response code="404">Изображение с таким id не найдено</response>
+            <returns>Модель изображения <see cref="T:AdBoard.Contracts.Image.ImageDto"/></returns>
+        </member>
+        <member name="M:AdBoard.Host.Api.Controllers.ImagesController.Create(AdBoard.Contracts.Image.CreateImageDto,System.Threading.CancellationToken)">
+            <summary>
+            Создаёт изображение по модели
+            </summary>
+            <param name="dto">Модель для создания изображения</param>
+            <param name="cancellationToken">Токен отмены</param>
+            <response code="201">Изображение успешно создано</response>
+            <response code="400">Модель данных запроса невалидна</response>
+            <response code="422">Произошёл конфликт бизнес логики</response>
+            <returns>Модель созданного изображения <see cref="T:AdBoard.Contracts.Image.ShortImageDto"/></returns>
+        </member>
+        <member name="M:AdBoard.Host.Api.Controllers.ImagesController.Delete(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Удаляет изображение по ID
+            </summary>
+            <param name="id">Идентификатор изображения</param>
+            <param name="cancellationToken">Токен отмены</param>
+            <response code="204">Удаление произведено успешно</response>
+            <response code="403">Нет доступа</response>
+            <response code="404">Изображение с таким ID не найден</response>
+        </member>
+        <member name="T:AdBoard.Host.Api.Controllers.UsersController">
+            <summary>
+            Контроллер для работы с <see cref="T:AdBoard.Domain.User.User"/>
+            </summary>
+            <response code="500">Произошла внутрення ошибка</response> 
+        </member>
+        <member name="M:AdBoard.Host.Api.Controllers.UsersController.#ctor(AdBoard.Application.AppData.Contexts.Advert.Services.IUserService,Microsoft.Extensions.Logging.ILogger{AdBoard.Host.Api.Controllers.UsersController})">
+            <summary>
+            Инициализирует контроллер <see cref="T:AdBoard.Domain.User.User"/>
+            </summary>
+            <param name="service">Сервис для работы с пользователями</param>
+            <param name="logger">Логгер</param>
+        </member>
+        <member name="M:AdBoard.Host.Api.Controllers.UsersController.GetAll(System.Threading.CancellationToken)">
+            <summary>
+            Вернуть всех пользователей
+            </summary>
+            <param name="cancellationToken">Токен отмены</param>
+            <response code="200">Запрос выполнен успешно</response>
+            <returns>Список пользователи</returns>
+        </member>
+        <member name="M:AdBoard.Host.Api.Controllers.UsersController.GetById(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Получить пользователя по id
+            </summary>
+            <param name="id">Идентификатор пользователя</param>
+            <param name="cancellationToken">Токен отмены</param>
+            <response code="200">Запрос выполнен успешно</response>
+            <response code="404">Пользователь с таким id не найден</response>
+            <returns>Модель пользователя <see cref="T:AdBoard.Contracts.User.UserDto"/></returns>
+        </member>
+        <member name="M:AdBoard.Host.Api.Controllers.UsersController.Create(AdBoard.Contracts.User.CreateUserDto,System.Threading.CancellationToken)">
+            <summary>
+            Создаёт пользователя по модели
+            </summary>
+            <param name="dto">Модель для создания пользователя</param>
+            <param name="cancellationToken">Токен отмены</param>
+            <response code="201">Пользователь успешно создано</response>
+            <response code="400">Модель данных запроса невалидна</response>
+            <response code="422">Произошёл конфликт бизнес логики</response>
+            <returns>Модель созданного пользователя <see cref="T:AdBoard.Contracts.User.ShortUserDto"/></returns>
+        </member>
+        <member name="M:AdBoard.Host.Api.Controllers.UsersController.Update(System.Guid,AdBoard.Contracts.User.UpdateUserDto,System.Threading.CancellationToken)">
+            <summary>
+            Обновляет пользователя по модели
+            </summary>
+            <param name="id">Идентификатор обновляемого пользователя</param>
+            <param name="dto">Модель пользователя</param>
+            <param name="cancellationToken">Токен отмены</param>
+            <response code="200">Запрос успешно выполнен</response>
+            <response code="400">Модель невалидна</response>
+            <response code="403">Доступ запрещен</response>
+            <response code="404">Пользователь не найден</response>
+            <response code="422">Конфликт бизнес логики</response>
+            <returns>Модель обновленного пользователя <see cref="T:AdBoard.Contracts.User.ShortUserDto"/></returns>
+        </member>
+        <member name="M:AdBoard.Host.Api.Controllers.UsersController.Delete(System.Guid,System.Threading.CancellationToken)">
+            <summary>
+            Удаляет пользователя по ID
+            </summary>
+            <param name="id">Идентификатор пользователя</param>
+            <param name="cancellationToken">Токен отмены</param>
+            <response code="204">Удаление произведено успешно</response>
+            <response code="403">Нет доступа</response>
+            <response code="404">Пользователь с таким ID не найден</response>
+        </member>
+        <member name="T:AdBoard.Host.Api.ExtensionMethods">
+            <summary>
+            Методы расширения для класса Program
+            </summary>
+        </member>
+        <member name="M:AdBoard.Host.Api.ExtensionMethods.AddServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Добавить сервисы в DI
+            </summary>
+            <param name="serviceCollection">Сервисы программы</param>
+        </member>
+        <member name="M:AdBoard.Host.Api.ExtensionMethods.AddRepositories(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Добавить репозитории в DI
+            </summary>
+            <param name="serviceCollection">Сервисы программы</param>
+        </member>
+        <member name="M:AdBoard.Host.Api.ExtensionMethods.AddDbContextWithConfigurations(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Добавить DbContext с конфигурациями в DI
+            </summary>
+            <param name="serviceCollection">Сервисы программы</param>
+        </member>
     </members>
 </doc>

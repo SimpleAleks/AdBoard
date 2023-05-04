@@ -24,7 +24,7 @@ public class AdvertConfiguration : IEntityTypeConfiguration<Domain.Advert.Advert
         builder.Property(a => a.Description).HasMaxLength(1024);
         builder.Property(a => a.Cost).IsRequired();
         builder.Property(a => a.Created)
-            .HasConversion(d => d, d => DateTime.SpecifyKind(d, DateTimeKind.Utc))
+            .HasConversion(d => d, d => DateTime.SpecifyKind((DateTime)d!, DateTimeKind.Utc))
             .IsRequired();
         builder.Property(a => a.Email).HasMaxLength(64);
         builder.Property(a => a.Location).HasMaxLength(256).IsRequired();

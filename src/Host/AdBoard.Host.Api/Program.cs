@@ -1,3 +1,4 @@
+using AdBoard.Contracts.Advert;
 using AdBoard.Host.Api;
 using AdBoard.Infrastructure.MapProfiles;
 using AutoMapper;
@@ -23,8 +24,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo() { Title = "AdBoard API", Version = "v1"});
+    options.IncludeXmlComments(Path.Combine(Path.Combine(AppContext.BaseDirectory,
+        $"{typeof(CreateAdvertDto).Assembly.GetName().Name}.xml")));
     options.IncludeXmlComments(Path.Combine(Path.Combine(AppContext.BaseDirectory, "Documentation.xml")));
-    options.IncludeXmlComments(Path.Combine(Path.Combine(AppContext.BaseDirectory, "Contracts.xml")));
 });
 
 var app = builder.Build();
@@ -58,3 +60,5 @@ static MapperConfiguration GetMapperConfiguration()
     config.AssertConfigurationIsValid();
     return config;
 }
+
+public partial class Program {}
