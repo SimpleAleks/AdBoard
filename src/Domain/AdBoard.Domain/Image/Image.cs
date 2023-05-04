@@ -8,17 +8,17 @@ public class Image
     /// <summary>
     /// Уникальный идентификатор
     /// </summary>
-    public Guid Id { get; set; }
+    public Guid? Id { get; set; }
     
     /// <summary>
     /// Идентификатор объявления
     /// </summary>
-    public Guid AdvertId { get; set; }
+    public Guid? AdvertId { get; set; }
     
     /// <summary>
     /// Навигационное свойство на <see cref="Advert"/>
     /// </summary>
-    public virtual Advert.Advert Advert { get; set; }
+    public virtual Advert.Advert? Advert { get; set; }
     
     /// <summary>
     /// Массив байтов, содержащий изображение

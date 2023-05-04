@@ -26,7 +26,7 @@ public interface IRepository<TEntity> where TEntity : class
     /// <param name="id">ID</param>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Запись <see cref="TEntity"/> из бд или null, если запись не найдена</returns>
-    Task<TEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+    Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
     
     /// <summary>
     /// Добавить объект <see cref="TEntity"/> в бд

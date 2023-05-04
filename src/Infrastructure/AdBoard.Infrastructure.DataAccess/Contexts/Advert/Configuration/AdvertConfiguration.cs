@@ -22,7 +22,7 @@ public class AdvertConfiguration : IEntityTypeConfiguration<Domain.Advert.Advert
         builder.HasKey(a => a.Id);
         builder.Property(a => a.Name).HasMaxLength(256).IsRequired();
         builder.Property(a => a.Description).HasMaxLength(1024);
-        builder.Property(a => a.Cost);
+        builder.Property(a => a.Cost).IsRequired();
         builder.Property(a => a.Created)
             .HasConversion(d => d, d => DateTime.SpecifyKind(d, DateTimeKind.Utc))
             .IsRequired();
@@ -37,12 +37,14 @@ public class AdvertConfiguration : IEntityTypeConfiguration<Domain.Advert.Advert
             .HasForeignKey(advert => advert.UserId)
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
+        builder.Property(a => a.UserId).IsRequired();
         
         // Images
         builder.HasMany(advert => advert.Images)
             .WithOne(image => image.Advert)
             .HasForeignKey(image => image.AdvertId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired(false);
 
         // Category
         builder.HasOne(advert => advert.Category)
@@ -50,5 +52,6 @@ public class AdvertConfiguration : IEntityTypeConfiguration<Domain.Advert.Advert
             .HasForeignKey(advert => advert.CategoryId)
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
+        builder.Property(a => a.CategoryId).IsRequired();
     }
 }

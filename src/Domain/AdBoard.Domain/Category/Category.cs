@@ -8,7 +8,7 @@ public class Category
     /// <summary>
     /// Id.
     /// </summary>
-    public Guid Id { get; set; }
+    public Guid? Id { get; set; }
     
     /// <summary>
     /// Название.
@@ -18,12 +18,12 @@ public class Category
     /// <summary>
     /// Id категории выше по иерархии.
     /// </summary>
-    public Guid ParentId { get; set; }
+    public Guid? ParentId { get; set; }
     
     /// <summary>
     /// Навигационное свойство на родительскую категорию
     /// </summary>
-    public virtual Category Parent { get; set; }
+    public virtual Category? Parent { get; set; }
     
     /// <summary>
     /// Дочерние категории

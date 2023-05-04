@@ -24,11 +24,12 @@ namespace AdBoard.Host.Migrator.Migrations
 
             modelBuilder.Entity("AdBoard.Domain.Advert.Advert", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("CategoryId")
+                    b.Property<Guid?>("CategoryId")
+                        .IsRequired()
                         .HasColumnType("uuid");
 
                     b.Property<decimal>("Cost")
@@ -59,7 +60,8 @@ namespace AdBoard.Host.Migrator.Migrations
                         .HasMaxLength(16)
                         .HasColumnType("character varying(16)");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
+                        .IsRequired()
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -73,7 +75,7 @@ namespace AdBoard.Host.Migrator.Migrations
 
             modelBuilder.Entity("AdBoard.Domain.Category.Category", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -82,7 +84,7 @@ namespace AdBoard.Host.Migrator.Migrations
                         .HasMaxLength(64)
                         .HasColumnType("character varying(64)");
 
-                    b.Property<Guid>("ParentId")
+                    b.Property<Guid?>("ParentId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -94,11 +96,12 @@ namespace AdBoard.Host.Migrator.Migrations
 
             modelBuilder.Entity("AdBoard.Domain.Image.Image", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("AdvertId")
+                    b.Property<Guid?>("AdvertId")
+                        .IsRequired()
                         .HasColumnType("uuid");
 
                     b.Property<byte[]>("Content")
@@ -114,7 +117,7 @@ namespace AdBoard.Host.Migrator.Migrations
 
             modelBuilder.Entity("AdBoard.Domain.User.User", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -133,14 +136,12 @@ namespace AdBoard.Host.Migrator.Migrations
                     b.HasOne("AdBoard.Domain.Category.Category", "Category")
                         .WithMany("Adverts")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("AdBoard.Domain.User.User", "User")
                         .WithMany("Adverts")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Category");
 
@@ -152,8 +153,7 @@ namespace AdBoard.Host.Migrator.Migrations
                     b.HasOne("AdBoard.Domain.Category.Category", "Parent")
                         .WithMany("Childs")
                         .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Parent");
                 });
