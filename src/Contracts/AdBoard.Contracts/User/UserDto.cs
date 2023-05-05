@@ -21,4 +21,9 @@ public class UserDto
     /// Объявления
     /// </summary>
     public IEnumerable<ShortAdvertDto> Adverts { get; set; }
+    
+    /// <summary>
+    /// Дата регистрации
+    /// </summary>
+    public DateTime RegisteredTime { get; set; }
 }

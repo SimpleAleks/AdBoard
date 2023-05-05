@@ -25,7 +25,15 @@ public interface IUserRepository
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Пользователь <see cref="UserDto"/> по идентификатору</returns>
     Task<UserDto?> GetById(Guid id, CancellationToken cancellationToken);
-    
+
+    /// <summary>
+    /// Найти пользователя по предикату
+    /// </summary>
+    /// <param name="predicate">Предикат</param>
+    /// <param name="cancellationToken">Токен отмены</param>
+    /// <returns>Пользователь <see cref="User"/></returns>
+    Task<User?> FindWhere(Expression<Func<User, bool>> predicate, CancellationToken cancellationToken);
+
     /// <summary>
     /// Добавить пользователя по модели
     /// </summary>

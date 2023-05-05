@@ -1,15 +1,10 @@
 ﻿namespace AdBoard.Contracts.User;
 
 /// <summary>
-/// Данные для создания нового пользователя
+/// Информация о пользователе для аутентификации
 /// </summary>
-public class CreateUserDto
+public class LoginUserDto
 {
-    /// <summary>
-    /// Имя пользователя
-    /// </summary>
-    public string Name { get; set; }
-    
     /// <summary>
     /// Логин
     /// </summary>

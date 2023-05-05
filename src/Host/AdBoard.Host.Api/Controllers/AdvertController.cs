@@ -3,6 +3,7 @@ using AdBoard.Application.AppData.Contexts.Advert.Services;
 using AdBoard.Contracts;
 using AdBoard.Contracts.Advert;
 using AdBoard.Domain.Advert;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdBoard.Host.Api.Controllers;
@@ -38,6 +39,7 @@ public class AdvertController : ControllerBase
     /// <response code="200">Запрос выполнен успешно</response>
     /// <returns>Список моделей объявления <see cref="ShortAdvertDto"/></returns>
     [HttpGet]
+    [Authorize]
     [ProducesResponseType(typeof(IEnumerable<ShortAdvertDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
