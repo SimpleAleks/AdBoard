@@ -1,6 +1,7 @@
 ﻿using AdBoard.Application.AppData.Contexts.Image.Services;
 using AdBoard.Contracts;
 using AdBoard.Contracts.Image;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdBoard.Host.Api.Controllers;
@@ -40,6 +41,7 @@ public class ImagesController : ControllerBase
     /// <response code="404">Изображение с таким id не найдено</response>
     /// <returns>Модель изображения <see cref="ImageDto"/></returns>
     [HttpGet("{id:guid}")]
+    [AllowAnonymous]
     [ProducesResponseType(typeof(ImageDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
@@ -57,20 +59,30 @@ public class ImagesController : ControllerBase
     /// <param name="cancellationToken">Токен отмены</param>
     /// <response code="201">Изображение успешно создано</response>
     /// <response code="400">Модель данных запроса невалидна</response>
+    /// <response code="403">Недостаточно прав доступа к изображению</response>
     /// <response code="422">Произошёл конфликт бизнес логики</response>
     /// <returns>Модель созданного изображения <see cref="ShortImageDto"/></returns>
     [HttpPost]
+    [Authorize]
     [ProducesResponseType(typeof(ShortImageDto), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status403Forbidden)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> Create([FromForm] CreateImageDto dto, CancellationToken cancellationToken)
     {
-        _logger.LogTrace("Request to create image");
-        var result = await _service.Add(dto, cancellationToken);
-        _logger.LogTrace("Image created with id: {Id}", result.Id);
-        return CreatedAtAction(nameof(Create), result);
+        try
+        {
+            _logger.LogTrace("Request to create image");
+            var result = await _service.Add(dto, cancellationToken);
+            _logger.LogTrace("Image created with id: {Id}", result.Id);
+            return CreatedAtAction(nameof(Create), result);
+        }
+        catch (UnauthorizedAccessException e)
+        {
+            return Forbid();
+        }
     }
-    
+
     /// <summary>
     /// Удаляет изображение по ID
     /// </summary>
@@ -80,13 +92,21 @@ public class ImagesController : ControllerBase
     /// <response code="403">Нет доступа</response>
     /// <response code="404">Изображение с таким ID не найден</response>
     [HttpDelete("{id:guid}")]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status403Forbidden)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
     {
-        var isRemoved = await _service.Delete(id, cancellationToken);
-        if (isRemoved) return NoContent();
-        return NotFound();
+        try
+        {
+            var isRemoved = await _service.Delete(id, cancellationToken);
+            if (isRemoved) return NoContent();
+            return NotFound();
+        }
+        catch (UnauthorizedAccessException e)
+        {
+            return Forbid();
+        }
     }
 }

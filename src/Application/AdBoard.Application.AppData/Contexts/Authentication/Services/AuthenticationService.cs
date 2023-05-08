@@ -38,6 +38,7 @@ public class AuthenticationService : IAuthenticationService
     {
         var user = _mapper.Map<User>(dto);
         user.Password = EncryptPassword(dto.Password);
+        user.Role = Constants.DefaultAuthorizationRole;
         var result = await _userRepository.Add(user, cancellationToken);
         return result.Id;
     }
@@ -46,15 +47,16 @@ public class AuthenticationService : IAuthenticationService
     {
         var existingUser = await _userRepository.FindWhere(u => u.Login == dto.Login, cancellationToken);
         
-        if (existingUser is null) throw new InvalidLoginException();
+        if (existingUser is null) throw new InvalidLoginDataException();
         
         var encryptedPassword = EncryptPassword(dto.Password);
-        if (existingUser.Password != encryptedPassword) throw new InvalidPasswordException();
+        if (existingUser.Password != encryptedPassword) throw new InvalidLoginDataException();
 
         var claims = new List<Claim>()
         {
             new(ClaimTypes.NameIdentifier, existingUser.Id.ToString()!),
-            new(ClaimTypes.Name, existingUser.Login)
+            new(ClaimTypes.Name, existingUser.Login),
+            new(ClaimTypes.Role, existingUser.Role)
         };
 
         var secretKey = _configuration["Jwt:SecurityKey"]!;
@@ -75,20 +77,6 @@ public class AuthenticationService : IAuthenticationService
         var result = new JwtSecurityTokenHandler().WriteToken(token);
 
         return result;
-    }
-
-    public async Task<UserDto?> GetCurrent(CancellationToken cancellationToken)
-    {
-        var claims = _httpContextAccessor.HttpContext?.User.Claims;
-        if (claims is null) return null;
-
-        var idString = claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
-        if (idString is null) return null;
-
-        var id = Guid.Parse(idString);
-        var user = await _userRepository.GetById(id, cancellationToken);
-        
-        return user is null ? null : _mapper.Map<UserDto>(user);
     }
 
     private string EncryptPassword(string password)

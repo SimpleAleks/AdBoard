@@ -1,6 +1,8 @@
-﻿using AdBoard.Application.AppData.Contexts.Authentication.Services;
+﻿using AdBoard.Application.AppData.Contexts.Authentication.Exceptions;
+using AdBoard.Application.AppData.Contexts.Authentication.Services;
 using AdBoard.Contracts;
 using AdBoard.Contracts.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdBoard.Host.Api.Controllers;
@@ -10,7 +12,8 @@ namespace AdBoard.Host.Api.Controllers;
 /// </summary>
 /// <response code="500"> Произошла внутрення ошибка </response>
 [ApiController]
-[Route("auth")]
+[AllowAnonymous]
+[Route("Auth")]
 [Produces("application/json")]
 [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status500InternalServerError)]
 public class AuthorizationController : ControllerBase
@@ -31,13 +34,23 @@ public class AuthorizationController : ControllerBase
     /// </summary>
     /// <param name="dto">Модель для аутентификации</param>
     /// <response code="200">Запрос выполнен успешно</response>
+    /// <response code="400">Модель данных не валидна</response>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>JWT токен</returns>
-    [HttpPost("login")]
+    [HttpPost("Login")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Login(LoginUserDto dto, CancellationToken cancellationToken)
     {
-        var loginResult = await _authenticationService.Login(dto, cancellationToken);
-        return await Task.Run(() => Ok(loginResult), cancellationToken);
+        try
+        {
+            var loginResult = await _authenticationService.Login(dto, cancellationToken);
+            return await Task.Run(() => Ok(loginResult), cancellationToken);
+        }
+        catch (InvalidLoginDataException e)
+        {
+            ModelState.AddModelError("errors", "Invalid login or password");
+            return BadRequest(ModelState);
+        }
     }
     
     /// <summary>
@@ -46,8 +59,10 @@ public class AuthorizationController : ControllerBase
     /// <param name="dto">Модель пользователя</param>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <response code="202">Создание выполнено успешно</response>
+    /// <response code="400">Модель данных не валидна</response>
     /// <returns>ID созданного пользователя</returns>
-    [HttpPost("register")]
+    [HttpPost("Register")]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Register(CreateUserDto dto, CancellationToken cancellationToken)
     {
         var result = await _authenticationService.Register(dto, cancellationToken);

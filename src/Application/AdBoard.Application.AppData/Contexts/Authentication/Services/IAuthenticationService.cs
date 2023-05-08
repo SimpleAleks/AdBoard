@@ -18,16 +18,8 @@ public interface IAuthenticationService
     /// <summary>
     /// Возвращает JWT токен пользователя
     /// </summary>
-    /// <param name="login">Логин пользователя</param>
-    /// <param name="password">Пароль пользователя</param>
+    /// <param name="dto">Модель данных авторизации</param>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>JWT токен</returns>
     Task<string> Login(LoginUserDto dto, CancellationToken cancellationToken);
-    
-    /// <summary>
-    /// Возвращает текущего пользователя
-    /// </summary>
-    /// <param name="cancellationToken">Токен отмены</param>
-    /// <returns>Текущий пользователь <see cref="UserDto"/></returns>
-    Task<UserDto?> GetCurrent(CancellationToken cancellationToken);
 }

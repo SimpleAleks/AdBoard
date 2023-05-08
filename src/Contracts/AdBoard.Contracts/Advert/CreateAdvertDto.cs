@@ -7,12 +7,6 @@ namespace AdBoard.Contracts.Advert;
 /// </summary>
 public class CreateAdvertDto
 {
-    // TODO: Убрать когда появится авторизация
-    /// <summary>
-    /// ID пользователя, создавшего объявление
-    /// </summary>
-    public Guid UserId { get; set; }
-
     /// <summary>
     /// Название.
     /// </summary>

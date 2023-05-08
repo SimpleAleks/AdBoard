@@ -18,6 +18,11 @@ public class UserDto
     public string Name { get; set; }
     
     /// <summary>
+    /// Роль
+    /// </summary>
+    public string Role { get; set; }
+    
+    /// <summary>
     /// Объявления
     /// </summary>
     public IEnumerable<ShortAdvertDto> Adverts { get; set; }

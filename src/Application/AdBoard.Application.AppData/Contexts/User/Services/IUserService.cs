@@ -26,6 +26,13 @@ public interface IUserService
     Task<UserDto?> GetById(Guid id, CancellationToken cancellationToken);
 
     /// <summary>
+    /// Получить текущего пользователя
+    /// </summary>
+    /// <param name="cancellationToken">Токен отмены</param>
+    /// <returns>Текущий пользователь</returns>
+    public Task<UserDto> GetCurrent(CancellationToken cancellationToken);
+
+    /// <summary>
     /// Создать пользователя по модели
     /// </summary>
     /// <param name="dto">Модель</param>

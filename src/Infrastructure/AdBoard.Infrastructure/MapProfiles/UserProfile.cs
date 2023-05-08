@@ -15,6 +15,7 @@ public class UserProfile : Profile
         CreateMap<User, UserDto>()
             .ForMember(d => d.Id, map => map.MapFrom(s => s.Id))
             .ForMember(d => d.Name, map => map.MapFrom(s => s.Name))
+            .ForMember(d => d.Role, map => map.MapFrom(s => s.Role))
             .ForMember(d => d.Adverts, map => map.MapFrom(s => s.Adverts))
             .ForMember(d => d.RegisteredTime, map => map.MapFrom(s => s.RegisteredTime));
 

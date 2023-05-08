@@ -1,17 +1,22 @@
 ﻿using System.Text;
+using AdBoard.Application.AppData.Authorization.AuthorizationHandlers;
 using AdBoard.Application.AppData.Contexts.Advert.Repositories;
 using AdBoard.Application.AppData.Contexts.Advert.Services;
 using AdBoard.Application.AppData.Contexts.Authentication.Services;
 using AdBoard.Application.AppData.Contexts.Category.Repositories;
 using AdBoard.Application.AppData.Contexts.Category.Services;
+using AdBoard.Application.AppData.Contexts.Image.Repositories;
+using AdBoard.Application.AppData.Contexts.Image.Services;
 using AdBoard.Application.AppData.Contexts.User.Services;
 using AdBoard.Infrastructure.DataAccess;
 using AdBoard.Infrastructure.DataAccess.Contexts.Advert.Repository;
 using AdBoard.Infrastructure.DataAccess.Contexts.Category.Repository;
+using AdBoard.Infrastructure.DataAccess.Contexts.Image.Repository;
 using AdBoard.Infrastructure.DataAccess.Contexts.User.Repository;
 using AdBoard.Infrastructure.DataAccess.Interfaces;
 using AdBoard.Infrastructure.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -28,10 +33,17 @@ public static class ExtensionMethods
     /// <param name="serviceCollection">Сервисы программы</param>
     public static void AddServices(this IServiceCollection serviceCollection)
     {
+        // Сервисы сущностей
         serviceCollection.AddScoped<IAdvertService, AdvertService>();
         serviceCollection.AddScoped<IUserService, UserService>();
         serviceCollection.AddScoped<ICategoryService, CategoryService>();
+        serviceCollection.AddScoped<IImageService, ImageService>();
         serviceCollection.AddScoped<IAuthenticationService, AuthenticationService>();
+
+        // Сервисы авторизации
+        serviceCollection.AddScoped<IAuthorizationHandler, AdminAuthorizationHandler>();
+        serviceCollection.AddScoped<IAuthorizationHandler, UserIsAdvertOwnerAuthorizationHandler>();
+        serviceCollection.AddScoped<IAuthorizationHandler, CurrentUserAuthorizationHandler>();
     }
 
     /// <summary>
@@ -44,6 +56,7 @@ public static class ExtensionMethods
         serviceCollection.AddScoped<IAdvertRepository, AdvertRepository>();
         serviceCollection.AddScoped<IUserRepository, UserRepository>();
         serviceCollection.AddScoped<ICategoryRepository, CategoryRepository>();
+        serviceCollection.AddScoped<IImagesRepository, ImageRepository>();
     }
 
     /// <summary>
