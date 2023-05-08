@@ -12,6 +12,14 @@ public class UserConfiguration : IEntityTypeConfiguration<Domain.User.User>
     {
         builder.HasKey(u => u.Id);
         builder.Property(u => u.Name).HasMaxLength(64).IsRequired();
+        builder.Property(u => u.Role).HasMaxLength(20).IsRequired();
+        builder.Property(u => u.Login).HasMaxLength(64).IsRequired();
+        builder.Property(u => u.Password).HasMaxLength(50).IsRequired();
+        builder.Property(u => u.RegisteredTime)
+            .HasConversion(d => d, d => DateTime.SpecifyKind(d, DateTimeKind.Utc))
+            .IsRequired();
+        
+        builder.HasIndex(u => u.Login).IsUnique();
 
         builder.HasMany(u => u.Adverts)
             .WithOne(a => a.User)

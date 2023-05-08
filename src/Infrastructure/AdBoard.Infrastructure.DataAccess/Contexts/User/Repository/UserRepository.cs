@@ -1,4 +1,5 @@
-﻿using AdBoard.Application.AppData.Contexts.Advert.Repositories;
+﻿using System.Linq.Expressions;
+using AdBoard.Application.AppData.Contexts.Advert.Repositories;
 using AdBoard.Contracts.Advert;
 using AdBoard.Contracts.User;
 using AdBoard.Infrastructure.Repository;
@@ -36,6 +37,11 @@ public class UserRepository : IUserRepository
             .Where(x => x.Id == id)
             .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
             .FirstOrDefaultAsync(cancellationToken);
+    }
+
+    public async Task<User?> FindWhere(Expression<Func<User, bool>> predicate, CancellationToken cancellationToken)
+    {
+        return await _repository.GetAllFiltered(predicate).FirstOrDefaultAsync(cancellationToken);
     }
 
     public async Task<ShortUserDto> Add(User user, CancellationToken cancellationToken)

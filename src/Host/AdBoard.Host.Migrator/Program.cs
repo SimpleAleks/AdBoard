@@ -17,7 +17,6 @@ public class Program
             .Build();
 
         await MigrateDatabaseAsync(host.Services);
-        await host.RunAsync();
     }
 
     private static async Task MigrateDatabaseAsync(IServiceProvider serviceProvider)

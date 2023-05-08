@@ -9,9 +9,4 @@ public class ShortImageDto
     /// Уникальный идентификатор
     /// </summary>
     public Guid Id { get; set; }
-
-    /// <summary>
-    /// Массив байтов, содержащий изображение
-    /// </summary>
-    public byte[] Content { get; set; }
 }

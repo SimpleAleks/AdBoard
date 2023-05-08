@@ -2,6 +2,7 @@
 using AdBoard.Contracts;
 using AdBoard.Contracts.User;
 using AdBoard.Domain.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdBoard.Host.Api.Controllers;
@@ -35,9 +36,12 @@ public class UsersController : ControllerBase
     /// </summary>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <response code="200">Запрос выполнен успешно</response>
+    /// <response code="403">Доступ запрещен</response>
     /// <returns>Список пользователи</returns>
     [HttpGet]
+    [Authorize(Roles = "Admin")]
     [ProducesResponseType(typeof(IEnumerable<ShortUserDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(IEnumerable<ShortUserDto>), StatusCodes.Status403Forbidden)]
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
         _logger.LogTrace("Request all users");
@@ -54,6 +58,7 @@ public class UsersController : ControllerBase
     /// <response code="404">Пользователь с таким id не найден</response>
     /// <returns>Модель пользователя <see cref="UserDto"/></returns>
     [HttpGet("{id:guid}")]
+    [AllowAnonymous]
     [ProducesResponseType(typeof(UserDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
@@ -65,24 +70,20 @@ public class UsersController : ControllerBase
     }
 
     /// <summary>
-    /// Создаёт пользователя по модели
+    /// Получить текущего пользователя
     /// </summary>
-    /// <param name="dto">Модель для создания пользователя</param>
-    /// <param name="cancellationToken">Токен отмены</param>
-    /// <response code="201">Пользователь успешно создано</response>
-    /// <response code="400">Модель данных запроса невалидна</response>
-    /// <response code="422">Произошёл конфликт бизнес логики</response>
-    /// <returns>Модель созданного пользователя <see cref="ShortUserDto"/></returns>
-    [HttpPost]
-    [ProducesResponseType(typeof(ShortUserDto), StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> Create([FromForm] CreateUserDto dto, CancellationToken cancellationToken)
+    /// <param name="cancellationToken"></param>
+    /// <response code="200">Запрос выполнен успешно</response>
+    /// <response code="403">Доступ запрещен</response>
+    /// <returns>Текущий пользователь</returns>
+    [HttpGet("current")]
+    [Authorize]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status403Forbidden)]
+    public async Task<IActionResult> GetCurrentUser(CancellationToken cancellationToken)
     {
-        _logger.LogTrace("Request to create user");
-        var result = await _service.Add(dto, cancellationToken);
-        _logger.LogTrace("User created with id: {Id}", result.Id);
-        return CreatedAtAction(nameof(Create), result);
+        var result = await _service.GetCurrent(cancellationToken);
+        return Ok(result);
     }
 
     /// <summary>
@@ -98,6 +99,7 @@ public class UsersController : ControllerBase
     /// <response code="422">Конфликт бизнес логики</response>
     /// <returns>Модель обновленного пользователя <see cref="ShortUserDto"/></returns>
     [HttpPut("{id:guid}")]
+    [Authorize]
     [ProducesResponseType(typeof(ShortUserDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status403Forbidden)]
@@ -105,9 +107,25 @@ public class UsersController : ControllerBase
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> Update(Guid id, [FromForm] UpdateUserDto dto, CancellationToken cancellationToken)
     {
-        _logger.LogTrace("Request to update user by id: {Id}", id);
-        var result = await _service.Update(id, dto, cancellationToken);
-        return Ok(result);
+        try
+        {
+            _logger.LogTrace("Request to update user by id: {Id}", id);
+            var result = await _service.Update(id, dto, cancellationToken);
+            return Ok(result);
+        }
+        catch (UnauthorizedAccessException e)
+        {
+            return Forbid();
+        }
+        catch (ArgumentException e)
+        {
+            if (e.ParamName == "id")
+            {
+                ModelState.AddModelError("Id", e.Message);
+            }
+
+            return BadRequest(ModelState);
+        }
     }
 
     /// <summary>
@@ -119,13 +137,21 @@ public class UsersController : ControllerBase
     /// <response code="403">Нет доступа</response>
     /// <response code="404">Пользователь с таким ID не найден</response>
     [HttpDelete("{id:guid}")]
+    [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status403Forbidden)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(Guid id, CancellationToken cancellationToken)
     {
-        var isRemoved = await _service.Delete(id, cancellationToken);
-        if (isRemoved) return NoContent();
-        return NotFound();
+        try
+        {
+            var isRemoved = await _service.Delete(id, cancellationToken);
+            if (isRemoved) return NoContent();
+            return NotFound();
+        }
+        catch (UnauthorizedAccessException e)
+        {
+            return Forbid();
+        }
     }
 }

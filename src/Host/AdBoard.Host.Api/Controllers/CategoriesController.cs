@@ -1,6 +1,7 @@
 ﻿using AdBoard.Application.AppData.Contexts.Category.Services;
 using AdBoard.Contracts;
 using AdBoard.Contracts.Category;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdBoard.Host.Api.Controllers;
@@ -10,6 +11,7 @@ namespace AdBoard.Host.Api.Controllers;
 /// </summary>
 /// <response code="500">Произошла внутрення ошибка</response>
 [ApiController]
+[Authorize(Roles = "Admin")]
 [Route("[controller]")]
 [Produces("application/json")]
 [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status500InternalServerError)]
@@ -36,6 +38,7 @@ public class CategoriesController : ControllerBase
     /// <response code="200">Запрос выполнен успешно</response>
     /// <returns>Список категорий</returns>
     [HttpGet]
+    [AllowAnonymous]
     [ProducesResponseType(typeof(IEnumerable<ShortCategoryDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
@@ -53,6 +56,7 @@ public class CategoriesController : ControllerBase
     /// <response code="404">Категория с таким id не найдена</response>
     /// <returns>Модель категории <see cref="CategoryDto"/></returns>
     [HttpGet("{id:guid}")]
+    [AllowAnonymous]
     [ProducesResponseType(typeof(CategoryDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
@@ -70,11 +74,13 @@ public class CategoriesController : ControllerBase
     /// <param name="cancellationToken">Токен отмены</param>
     /// <response code="201">Категория успешно создана</response>
     /// <response code="400">Модель данных запроса невалидна</response>
+    /// <response code="403">Недостаточно прав для создания категории</response>
     /// <response code="422">Произошёл конфликт бизнес логики</response>
     /// <returns>Модель созданной категории <see cref="ShortCategoryDto"/></returns>
     [HttpPost]
     [ProducesResponseType(typeof(ShortCategoryDto), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status403Forbidden)]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> Create([FromForm] CreateCategoryDto dto, CancellationToken cancellationToken)
     {

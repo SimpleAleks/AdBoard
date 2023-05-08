@@ -1,10 +1,6 @@
 ﻿using AdBoard.Contracts.Advert;
-using AdBoard.Contracts.Category;
-using AdBoard.Contracts.User;
 using AdBoard.Domain.Advert;
-using AdBoard.Domain.Category;
 using AdBoard.Domain.Image;
-using AdBoard.Domain.User;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 
@@ -20,10 +16,7 @@ public class AdvertProfile : Profile
     /// </summary>
     public AdvertProfile()
     {
-        CreateMap<CreateAdvertDto, Advert>()
-            .ForMember(x => x.Id, map => map.Ignore())
-            .ForMember(x => x.UserId, map => map.MapFrom(d => d.UserId))
-            .ForMember(x => x.User, m => m.Ignore())
+        CreateMap<CreateAdvertDto, Advert>(MemberList.None)
             .ForMember(x => x.Name, map => map.MapFrom(d => d.Name))
             .ForMember(x => x.Description, map => map.MapFrom(d => d.Description))
             .ForMember(x => x.Images, map => map.MapFrom((s, _, _, _) => RequestFilesToImages(s.Images)))
@@ -32,10 +25,9 @@ public class AdvertProfile : Profile
             .ForMember(x => x.Phone, map => map.MapFrom(d => d.Phone))
             .ForMember(x => x.Location, map => map.MapFrom(d => d.Location))
             .ForMember(x => x.Created, map => map.MapFrom(d => DateTime.UtcNow))
-            .ForMember(x => x.CategoryId, map => map.MapFrom(d => d.CategoryId))
-            .ForMember(x => x.Category, map => map.Ignore());
+            .ForMember(x => x.CategoryId, map => map.MapFrom(d => d.CategoryId));
 
-        CreateMap<UpdateAdvertDto, Advert>().IncludeBase<CreateAdvertDto, Advert>();
+        CreateMap<UpdateAdvertDto, Advert>(MemberList.None).IncludeBase<CreateAdvertDto, Advert>();
 
         CreateMap<Advert, AdvertDto>()
             .ForMember(d => d.Id, map => map.MapFrom(s => s.Id))
