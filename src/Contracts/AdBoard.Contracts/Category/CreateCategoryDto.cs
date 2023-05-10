@@ -1,4 +1,6 @@
-﻿namespace AdBoard.Contracts.Category;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AdBoard.Contracts.Category;
 
 /// <summary>
 /// Данные для создания категории
@@ -8,6 +10,8 @@ public class CreateCategoryDto
     /// <summary>
     /// Название
     /// </summary>
+    [Required]
+    [StringLength(64, ErrorMessage = "{0} length can't be more than {1} and less than {2}.", MinimumLength = 3)]
     public string Name { get; set; }
     
     /// <summary>

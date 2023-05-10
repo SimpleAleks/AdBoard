@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.ComponentModel.DataAnnotations;
+using AdBoard.Contracts.Attributes;
+using Microsoft.AspNetCore.Http;
 
 namespace AdBoard.Contracts.Advert;
 
@@ -10,40 +12,53 @@ public class CreateAdvertDto
     /// <summary>
     /// Название.
     /// </summary>
+    [Required]
+    [StringLength(256, ErrorMessage = "{0} length can't be more than {1} and less than {2}.", MinimumLength = 4)]
     public string Name { get; set; }
-    
+
     /// <summary>
     /// Описание.
     /// </summary>
-    public string Description { get; set; }
-    
+    [StringLength(256, ErrorMessage = "{0} length can't be more than {1}.")]
+    public string? Description { get; set; }
+
     /// <summary>
     /// Изображения объявлений
     /// </summary>
-    public IEnumerable<IFormFile> Images { get; set; }
+    [DataType(DataType.Upload)]
+    [FilesExtension(new []{".jpeg", ".png", ".jpg"})]
+    public IEnumerable<IFormFile>? Images { get; set; }
 
     /// <summary>
     /// Цена.
     /// </summary>
-    public decimal Cost { get; set; }
+    [Required]
+    [Range(0, double.MaxValue)]
+    public decimal? Cost { get; set; }
     
     /// <summary>
     /// Email.
     /// </summary>
-    public string Email { get; set; }
+    [EmailAddress]
+    public string? Email { get; set; }
     
     /// <summary>
     /// Телефон.
     /// </summary>
+    [Required]
+    [Phone]
     public string Phone { get; set; }
     
     /// <summary>
     /// Геолокация объявления
     /// </summary>
+    [Required]
+    [StringLength(256, ErrorMessage = "{0} length can't be more than {1} and less than {2}.", MinimumLength = 1)]
     public string Location { get; set; }
 
     /// <summary>
     /// Id категории.
     /// </summary>
-    public Guid CategoryId { get; set; }
+    [Required]
+    public Guid? CategoryId { get; set; }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.ComponentModel.DataAnnotations;
+using AdBoard.Contracts.Attributes;
+using Microsoft.AspNetCore.Http;
 
 namespace AdBoard.Contracts.Image;
 
@@ -10,10 +12,13 @@ public class CreateImageDto
     /// <summary>
     /// Идентификатор объявления
     /// </summary>
-    public Guid AdvertId { get; set; }
+    [Required]
+    public Guid? AdvertId { get; set; }
 
     /// <summary>
     /// Массив байтов, содержащий изображение
     /// </summary>
+    [Required]
+    [FileExtension(new []{".jpeg", ".png", ".jpg"})]
     public IFormFile Content { get; set; }
 }
