@@ -82,6 +82,7 @@ public class AdvertController : ControllerBase
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> Create([FromForm] CreateAdvertDto dto, CancellationToken cancellationToken)
     {
+        dto.Images ??= Array.Empty<IFormFile>();
         var result = await _service.Add(dto, cancellationToken);
         return CreatedAtAction(nameof(Create), result);
     }

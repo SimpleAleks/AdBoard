@@ -54,7 +54,7 @@ public class ImageService : IImageService
     public async Task<ShortImageDto> Add(CreateImageDto dto, CancellationToken cancellationToken)
     {
         
-        var existEntity = await _advertService.GetById(dto.AdvertId, cancellationToken);
+        var existEntity = await _advertService.GetById((Guid)dto.AdvertId!, cancellationToken);
         var authorizationResult = await _authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext!.User, existEntity, OperationsList.Update);
         if (!authorizationResult.Succeeded) throw new UnauthorizedAccessException("User hasn't permissions to this advert's image");
         
