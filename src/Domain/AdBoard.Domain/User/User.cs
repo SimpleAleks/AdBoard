@@ -35,6 +35,11 @@ public class User
     public virtual IEnumerable<Advert.Advert> Adverts { get; set; }
     
     /// <summary>
+    /// Комментарии пользователя
+    /// </summary>
+    public virtual IEnumerable<Comment.Comment> Comments { get; set; }
+
+    /// <summary>
     /// Дата регистрации
     /// </summary>
     public DateTime RegisteredTime { get; set; }

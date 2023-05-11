@@ -1,7 +1,9 @@
 ﻿using AdBoard.Application.AppData.Contexts.Advert.Services;
+using AdBoard.Application.AppData.Contexts.Comment.Services;
 using AdBoard.Application.AppData.Exceptions;
 using AdBoard.Contracts;
 using AdBoard.Contracts.Advert;
+using AdBoard.Contracts.Comment;
 using AdBoard.Domain.Advert;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,16 +22,19 @@ public class AdvertController : ControllerBase
 {
     private readonly ILogger<AdvertController> _logger;
     private readonly IAdvertService _service;
+    private readonly ICommentService _commentService;
 
     /// <summary>
     /// Инициализирует экземпляр <see cref="AdvertController"/>
     /// </summary>
     /// <param name="logger">Логгер</param>
     /// <param name="service">Сервис для работы с <see cref="Advert"/></param>
-    public AdvertController(ILogger<AdvertController> logger, IAdvertService service)
+    /// <param name="commentService">Сервис дял работы с комментариями</param>
+    public AdvertController(ILogger<AdvertController> logger, IAdvertService service, ICommentService commentService)
     {
         _logger = logger;
         _service = service;
+        _commentService = commentService;
     }
 
     /// <summary>
@@ -66,6 +71,43 @@ public class AdvertController : ControllerBase
         return Ok(result);
     }
 
+    /// <summary>
+    /// Получить список комментариев объявления
+    /// </summary>
+    /// <param name="id">Идентификатор объявления</param>
+    /// <param name="cancellationToken">Токен отмены</param>
+    /// <response code="200">Запрос выполнен успешно</response>
+    /// <returns>Список моделей комментариев <see cref="ShortCommentDto"/></returns>
+    [HttpGet("{id:guid}/Comments")]
+    [AllowAnonymous]
+    [ProducesResponseType(typeof(IEnumerable<ShortCommentDto>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetAllComments(Guid id, CancellationToken cancellationToken)
+    {
+        var result = await _commentService.GetAllByAdvertId(id, cancellationToken);
+        return Ok(result);
+    }
+    
+    /// <summary>
+    /// Создаёт комментарий по модели в объявлении
+    /// </summary>
+    /// <param name="id">Идентификатор объявления</param>
+    /// <param name="dto">Модель для создания комментария</param>
+    /// <param name="cancellationToken">Токен отмены</param>
+    /// <response code="201">Успешно создано</response>
+    /// <response code="400">Модель данных запроса невалидна</response>
+    /// <response code="422">Произошёл конфликт бизнес логики</response>
+    /// <returns>Модель созданного комментария <see cref="ShortCommentDto"/></returns>
+    [HttpPost("{id:guid}/comments")]
+    [Authorize]
+    [ProducesResponseType(typeof(ShortCommentDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status422UnprocessableEntity)]
+    public async Task<IActionResult> CreateComment(Guid id, [FromForm] CreateCommentDto dto, CancellationToken cancellationToken)
+    {
+        var result = await _commentService.Create(id, dto, cancellationToken);
+        return CreatedAtAction(nameof(Create), result);
+    }
+    
     /// <summary>
     /// Создаёт объявление по модели
     /// </summary>

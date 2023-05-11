@@ -88,6 +88,7 @@ static MapperConfiguration GetMapperConfiguration()
         cfg.AddProfile<CategoryProfile>();
         cfg.AddProfile<UserProfile>();
         cfg.AddProfile<ImageProfile>();
+        cfg.AddProfile<CommentProfile>();
     });
     config.AssertConfigurationIsValid();
     return config;

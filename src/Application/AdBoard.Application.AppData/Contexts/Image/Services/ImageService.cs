@@ -55,7 +55,7 @@ public class ImageService : IImageService
     {
         
         var existEntity = await _advertService.GetById((Guid)dto.AdvertId!, cancellationToken);
-        var authorizationResult = await _authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext!.User, existEntity, OperationsList.Update);
+        var authorizationResult = await _authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext!.User, existEntity, OperationsList.Create);
         if (!authorizationResult.Succeeded) throw new UnauthorizedAccessException("User hasn't permissions to this advert's image");
         
         var image = _mapper.Map<Image>(dto);
@@ -73,7 +73,7 @@ public class ImageService : IImageService
         var advertId = (await _repository.GetById(id, cancellationToken))!.AdvertId;
         
         var existEntity = await _advertService.GetById(advertId, cancellationToken);
-        var authorizationResult = await _authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext!.User, existEntity, OperationsList.Update);
+        var authorizationResult = await _authorizationService.AuthorizeAsync(_httpContextAccessor.HttpContext!.User, existEntity, OperationsList.Delete);
         if (!authorizationResult.Succeeded) throw new UnauthorizedAccessException("User hasn't permissions to this advert's image");
         
         return await _repository.Delete(id, cancellationToken);
