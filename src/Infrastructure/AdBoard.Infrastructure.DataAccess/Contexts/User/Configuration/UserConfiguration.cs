@@ -26,5 +26,11 @@ public class UserConfiguration : IEntityTypeConfiguration<Domain.User.User>
             .HasForeignKey(a => a.UserId)
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired(false);
+
+        builder.HasMany(u => u.Comments)
+            .WithOne(c => c.User)
+            .HasForeignKey(c => c.UserId)
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired(false);
     }
 }

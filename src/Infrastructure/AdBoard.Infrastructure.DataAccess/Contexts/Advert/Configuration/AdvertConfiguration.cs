@@ -1,8 +1,4 @@
-﻿using AdBoard.Domain.Advert;
-using AdBoard.Domain.Category;
-using AdBoard.Domain.Image;
-using AdBoard.Domain.User;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AdBoard.Infrastructure.DataAccess.Contexts.Advert.Configuration;
@@ -53,5 +49,12 @@ public class AdvertConfiguration : IEntityTypeConfiguration<Domain.Advert.Advert
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired();
         builder.Property(a => a.CategoryId).IsRequired();
+        
+        // Comments
+        builder.HasMany(a => a.Comments)
+            .WithOne(c => c.Advert)
+            .HasForeignKey(c => c.AdvertId)
+            .OnDelete(DeleteBehavior.Cascade)
+            .IsRequired(false);
     }
 }

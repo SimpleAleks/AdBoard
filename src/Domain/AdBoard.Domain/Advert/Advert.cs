@@ -1,5 +1,7 @@
 ﻿namespace AdBoard.Domain.Advert;
 
+using Comment = AdBoard.Domain.Comment.Comment;
+
 /// <summary>
 /// Объявление.
 /// </summary>
@@ -55,6 +57,11 @@ public class Advert
     /// </summary>
     public string Location { get; set; }
     
+    /// <summary>
+    /// Комментарии
+    /// </summary>
+    public virtual IEnumerable<Comment> Comments { get; set; }
+
     /// <summary>
     /// Дата создания.
     /// </summary>
