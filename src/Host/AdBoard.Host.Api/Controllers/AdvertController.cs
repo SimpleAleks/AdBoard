@@ -40,15 +40,18 @@ public class AdvertController : ControllerBase
     /// <summary>
     /// Получить список объявлений
     /// </summary>
+    /// <param name="search">Строка поиска</param>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <response code="200">Запрос выполнен успешно</response>
     /// <returns>Список моделей объявления <see cref="ShortAdvertDto"/></returns>
     [HttpGet]
     [AllowAnonymous]
     [ProducesResponseType(typeof(IEnumerable<ShortAdvertDto>), StatusCodes.Status200OK)]
-    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAll(string? search, CancellationToken cancellationToken)
     {
-        var result = await _service.GetAll(cancellationToken);
+        var result = string.IsNullOrEmpty(search)
+            ? await _service.GetAll(cancellationToken)
+            : await _service.GetAllBySearch(search, cancellationToken);
         return Ok(result);
     }
 
