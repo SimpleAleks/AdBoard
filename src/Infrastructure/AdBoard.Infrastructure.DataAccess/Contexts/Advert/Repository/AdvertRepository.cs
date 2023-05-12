@@ -28,6 +28,17 @@ public class AdvertRepository : IAdvertRepository
             .ToArrayAsync(cancellationToken);
     }
 
+    public async Task<ShortAdvertDto[]> GetAllBySearch(string search, CancellationToken cancellationToken)
+    {
+        var query = _repository.GetAll();
+        var searchWords = search.Split(' ');
+        query = searchWords.Aggregate(query,
+            (currentQuery, word) => currentQuery.Where(x => x.Name.ToLower().Trim().Contains(word) || x.Description!.ToLower().Trim().Contains(word)));
+        return await query
+            .ProjectTo<ShortAdvertDto>(_mapper.ConfigurationProvider)
+            .ToArrayAsync(cancellationToken);
+    }
+
     public Task<AdvertDto?> GetById(Guid id, CancellationToken cancellationToken)
     {
         return _repository.GetAll()

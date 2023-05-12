@@ -14,7 +14,15 @@ public interface IAdvertRepository
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Список объявлений <see cref="ShortAdvertDto"/></returns>
     Task<ShortAdvertDto[]> GetAll(CancellationToken cancellationToken);
-    
+
+    /// <summary>
+    /// Получить объявления удовлетворяющие предикату
+    /// </summary>
+    /// <param name="search">Поисковая строка</param>
+    /// <param name="cancellationToken">Токен отмены</param>
+    /// <returns>Список объявлений <see cref="ShortAdvertDto"/></returns>
+    Task<ShortAdvertDto[]> GetAllBySearch(string search, CancellationToken cancellationToken);
+
     /// <summary>
     /// Получить объявление по ID
     /// </summary>
