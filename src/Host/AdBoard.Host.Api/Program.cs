@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using AdBoard.Host.Api;
 using AdBoard.Infrastructure.MapProfiles;
 using AutoMapper;
@@ -72,6 +73,19 @@ if (app.Environment.IsDevelopment())
 app.UseHsts();
 
 app.UseHttpsRedirection();
+
+if (app.Environment.IsProduction())
+{
+    app.UseExceptionHandler(configure =>
+        configure.Run(async context =>
+        {
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+
+            context.Response.ContentType = MediaTypeNames.Text.Plain;
+
+            await context.Response.WriteAsync("An exception was thrown.");
+        }));
+}
 
 app.UseAuthentication();
 app.UseAuthorization();
