@@ -10,9 +10,11 @@ services:
     ports:
       - "5000:80"
     environment:
-      - ConnectionStrings__PostgresDb=Server=postgres;Database=adboard;Username=postgres;Password=password;Port=5432
+      - ConnectionStrings__PostgresAdBoardDb=Server=postgres;Database=adboard;Username=postgres;Password=password;Port=5432
     depends_on:
       - "postgres"
+    networks:
+      - adboard-network
 
   migrator:
     container_name: adboard-migrator
@@ -20,7 +22,7 @@ services:
       context: .
       dockerfile: src/Host/AdBoard.Host.Migrator/Dockerfile
     environment:
-      - ConnectionStrings__PostgresBoardDb=Server=postgres;Database=Board;Username=postgres;Password=password;Port=5432
+      - ConnectionStrings__PostgresAdBoardDb=Server=postgres;Database=adboard;Username=postgres;Password=password;Port=5432
     networks:
       - adboard-network
     depends_on:
@@ -31,10 +33,13 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
+      POSTGRES_DB: AdBoard
     volumes:
       - pg-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    networks:
+      - adboard-network
 
 volumes:
   pg-data:
