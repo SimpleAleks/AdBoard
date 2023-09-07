@@ -21,9 +21,27 @@ public class AdvertRepository : IAdvertRepository
         _mapper = mapper;
     }
     
-    public Task<ShortAdvertDto[]> GetAll(CancellationToken cancellationToken)
+    public Task<ShortAdvertDto[]> GetAll(AdvertSearchRequestDto? request,
+        CancellationToken cancellationToken)
     {
-        return _repository.GetAll()
+        var query = _repository.GetAll();
+
+        if (request is not null)
+        {
+            if (request.Search is not null)
+            {
+                var searchWords = request.Search.Split(' ');
+                query = searchWords.Aggregate(query,
+                    (currentQuery, word) => currentQuery.Where(x => x.Name.ToLower().Trim().Contains(word) || x.Description!.ToLower().Trim().Contains(word)));
+            }
+
+            if (!(request.ShowNonActive.HasValue && request.ShowNonActive.Value))
+            {
+                query = query.Where(x => x.IsActive);
+            }
+        }
+        
+        return query
             .ProjectTo<ShortAdvertDto>(_mapper.ConfigurationProvider)
             .ToArrayAsync(cancellationToken);
     }

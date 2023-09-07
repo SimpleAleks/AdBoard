@@ -9,17 +9,10 @@ public interface IAdvertService
     /// <summary>
     /// Получить список объявлений
     /// </summary>
+    /// <param name="request">Запрос на фильтрацию и поиск</param>
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Список объявлений <see cref="ShortAdvertDto"/></returns>
-    Task<ShortAdvertDto[]> GetAll(CancellationToken cancellationToken);
-
-    /// <summary>
-    /// Получить объявления по поиску
-    /// </summary>
-    /// <param name="search">Поисковая строка</param>
-    /// <param name="cancellationToken">Токен отмены</param>
-    /// <returns>Список объявлений <see cref="ShortAdvertDto"/></returns>
-    Task<ShortAdvertDto[]> GetAllBySearch(string search, CancellationToken cancellationToken);
+    Task<ShortAdvertDto[]> GetAll(AdvertSearchRequestDto? request, CancellationToken cancellationToken);
 
     /// <summary>
     /// Получить объявление по ID

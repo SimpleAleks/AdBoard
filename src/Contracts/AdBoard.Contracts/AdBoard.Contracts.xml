@@ -1,0 +1,504 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AdBoard.Contracts</name>
+    </assembly>
+    <members>
+        <member name="T:AdBoard.Contracts.Advert.AdvertDto">
+            <summary>
+            Объявление (подробное описание)
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.AdvertDto.Id">
+            <summary>
+            Id.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.AdvertDto.User">
+            <summary>
+            Пользователь, создавший объявление
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.AdvertDto.Name">
+            <summary>
+            Название.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.AdvertDto.Description">
+            <summary>
+            Описание.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.AdvertDto.IsActive">
+            <summary>
+            Признак актуальности объявления.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.AdvertDto.ImagesIds">
+            <summary>
+            ID изображений привязанных к объявлению
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.AdvertDto.Cost">
+            <summary>
+            Цена.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.AdvertDto.Email">
+            <summary>
+            Email.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.AdvertDto.Phone">
+            <summary>
+            Телефон.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.AdvertDto.Location">
+            <summary>
+            Геолокация объявления
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.AdvertDto.Created">
+            <summary>
+            Дата создания.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.AdvertDto.Category">
+            <summary>
+            Категория объявления
+            </summary>
+        </member>
+        <member name="T:AdBoard.Contracts.Advert.AdvertSearchRequestDto">
+            <summary>
+            Модель запроса на поиск объявлений.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.AdvertSearchRequestDto.Search">
+            <summary>
+            Строка поиска.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.AdvertSearchRequestDto.ShowNonActive">
+            <summary>
+            Показывать неактивные объявления
+            </summary>
+            <remarks>
+            Неактивные объявления, это объявления у которых поле IsActive
+            равно false. Эти объявления могли быть удалены или закрыты продавцом.
+            </remarks>
+        </member>
+        <member name="T:AdBoard.Contracts.Advert.CreateAdvertDto">
+            <summary>
+            Создание объявления
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.CreateAdvertDto.Name">
+            <summary>
+            Название.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.CreateAdvertDto.Description">
+            <summary>
+            Описание.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.CreateAdvertDto.Images">
+            <summary>
+            Изображения объявлений
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.CreateAdvertDto.Cost">
+            <summary>
+            Цена.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.CreateAdvertDto.Email">
+            <summary>
+            Email.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.CreateAdvertDto.Phone">
+            <summary>
+            Телефон.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.CreateAdvertDto.Location">
+            <summary>
+            Геолокация объявления
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.CreateAdvertDto.CategoryId">
+            <summary>
+            Id категории.
+            </summary>
+        </member>
+        <member name="T:AdBoard.Contracts.Advert.ShortAdvertDto">
+            <summary>
+            Краткая информация об объявлении
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.ShortAdvertDto.Id">
+            <summary>
+            Идентификатор
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.ShortAdvertDto.Name">
+            <summary>
+            Название
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.ShortAdvertDto.IsActive">
+            <summary>
+            Признак актуальности объявления.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.ShortAdvertDto.ImagesIds">
+            <summary>
+            Изображения
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.ShortAdvertDto.Cost">
+            <summary>
+            Цена
+            </summary>
+        </member>
+        <member name="T:AdBoard.Contracts.Advert.UpdateAdvertDto">
+            <summary>
+            Обновление объявления
+            </summary>
+        </member>
+        <member name="T:AdBoard.Contracts.Attributes.FileExtensionAttribute">
+            <summary>
+            Проверяет расширение у файла
+            </summary>
+        </member>
+        <member name="M:AdBoard.Contracts.Attributes.FileExtensionAttribute.#ctor(System.String[])">
+            <summary>
+            Инициализирует атрибут
+            </summary>
+            <param name="extensions">Разрешенные расширения файла</param>
+        </member>
+        <member name="T:AdBoard.Contracts.Attributes.FilesExtensionAttribute">
+            <summary>
+            Проверяет наличие расширений у массива файлов
+            </summary>
+        </member>
+        <member name="M:AdBoard.Contracts.Attributes.FilesExtensionAttribute.#ctor(System.String[])">
+            <summary>
+            Инициализирует атрибут
+            </summary>
+            <param name="extensions">Разрешенные расширения файла</param>
+        </member>
+        <member name="T:AdBoard.Contracts.Category.CategoryDto">
+            <summary>
+            Данные о категории
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Category.CategoryDto.Id">
+            <summary>
+            Id.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Category.CategoryDto.Name">
+            <summary>
+            Название.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Category.CategoryDto.ParentId">
+            <summary>
+            Id категории выше по иерархии.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Category.CategoryDto.Childs">
+            <summary>
+            Дочерние категории
+            </summary>
+        </member>
+        <member name="T:AdBoard.Contracts.Category.CreateCategoryDto">
+            <summary>
+            Данные для создания категории
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Category.CreateCategoryDto.Name">
+            <summary>
+            Название
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Category.CreateCategoryDto.ParentId">
+            <summary>
+            Id категории выше по иерархии (если есть)
+            </summary>
+        </member>
+        <member name="T:AdBoard.Contracts.Category.ShortCategoryDto">
+            <summary>
+            Краткое описание категории
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Category.ShortCategoryDto.Id">
+            <summary>
+            Идентификатор
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Category.ShortCategoryDto.ParentId">
+            <summary>
+            Родительская категория
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Category.ShortCategoryDto.Name">
+            <summary>
+            Название
+            </summary>
+        </member>
+        <member name="T:AdBoard.Contracts.Category.UpdateCategoryDto">
+            <summary>
+            Данные о категории для обновления
+            </summary>
+        </member>
+        <member name="T:AdBoard.Contracts.Comment.CommentDto">
+            <summary>
+            Информация о комментарии
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Comment.CommentDto.Id">
+            <summary>
+            Идентификатор
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Comment.CommentDto.Text">
+            <summary>
+            Содержимое комментария
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Comment.CommentDto.Created">
+            <summary>
+            Дата создания
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Comment.CommentDto.ParentId">
+            <summary>
+            Родитель (если комментарий является ответом на другой комментарий)
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Comment.CommentDto.Advert">
+            <summary>
+            Объявление, к которому относится комментарий
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Comment.CommentDto.User">
+            <summary>
+            Пользователь, написавший комментарий
+            </summary>
+        </member>
+        <member name="T:AdBoard.Contracts.Comment.CreateCommentDto">
+            <summary>
+            Модель создания комментария
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Comment.CreateCommentDto.Text">
+            <summary>
+            Содержимое комментария
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Comment.CreateCommentDto.ParentId">
+            <summary>
+            Родитель (если комментарий является ответом на другой комментарий)
+            </summary>
+        </member>
+        <member name="T:AdBoard.Contracts.Comment.ShortCommentDto">
+            <summary>
+            Сокращенная информация о комментарии
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Comment.ShortCommentDto.Id">
+            <summary>
+            Идентификатор
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Comment.ShortCommentDto.Text">
+            <summary>
+            Содержимое комментария
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Comment.ShortCommentDto.Created">
+            <summary>
+            Дата создания
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Comment.ShortCommentDto.ParentId">
+            <summary>
+            Идентификатор родительского комментария
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Comment.ShortCommentDto.User">
+            <summary>
+            Пользователь, написавший комментарий
+            </summary>
+        </member>
+        <member name="T:AdBoard.Contracts.Comment.UpdateCommentDto">
+            <summary>
+            Модель обновления комментария
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Comment.UpdateCommentDto.Text">
+            <summary>
+            Содержимое комментария
+            </summary>
+        </member>
+        <member name="T:AdBoard.Contracts.ErrorDto">
+            <summary>
+            Модель ошибки.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.ErrorDto.ErrorCode">
+            <summary>
+            Код ошибки.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.ErrorDto.UserMessage">
+            <summary>
+            Сообщение для пользователя.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.ErrorDto.InternalErrors">
+            <summary>
+            Вложенные ошибки.
+            </summary>
+        </member>
+        <member name="T:AdBoard.Contracts.Image.CreateImageDto">
+            <summary>
+            Информация для создания изображения
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Image.CreateImageDto.AdvertId">
+            <summary>
+            Идентификатор объявления
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Image.CreateImageDto.Content">
+            <summary>
+            Массив байтов, содержащий изображение
+            </summary>
+        </member>
+        <member name="T:AdBoard.Contracts.Image.ImageDto">
+            <summary>
+            Информация об изображении
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Image.ImageDto.Id">
+            <summary>
+            Уникальный идентификатор
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Image.ImageDto.AdvertId">
+            <summary>
+            Идентификатор объявления
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Image.ImageDto.Content">
+            <summary>
+            Массив байтов, содержащий изображение
+            </summary>
+        </member>
+        <member name="T:AdBoard.Contracts.Image.ShortImageDto">
+            <summary>
+            Краткое описание изображения
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Image.ShortImageDto.Id">
+            <summary>
+            Уникальный идентификатор
+            </summary>
+        </member>
+        <member name="T:AdBoard.Contracts.Image.UpdateImageDto">
+            <summary>
+            Информация для обновления изображения
+            </summary>
+        </member>
+        <member name="T:AdBoard.Contracts.User.CreateUserDto">
+            <summary>
+            Данные для создания нового пользователя
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.User.CreateUserDto.Name">
+            <summary>
+            Имя пользователя
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.User.CreateUserDto.Login">
+            <summary>
+            Логин
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.User.CreateUserDto.Password">
+            <summary>
+            Пароль
+            </summary>
+        </member>
+        <member name="T:AdBoard.Contracts.User.LoginUserDto">
+            <summary>
+            Информация о пользователе для аутентификации
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.User.LoginUserDto.Login">
+            <summary>
+            Логин
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.User.LoginUserDto.Password">
+            <summary>
+            Пароль
+            </summary>
+        </member>
+        <member name="T:AdBoard.Contracts.User.ShortUserDto">
+            <summary>
+            Краткая информация о пользователе
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.User.ShortUserDto.Id">
+            <summary>
+            Идентификатор
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.User.ShortUserDto.Name">
+            <summary>
+            Имя пользователя
+            </summary>
+        </member>
+        <member name="T:AdBoard.Contracts.User.UpdateUserDto">
+            <summary>
+            Данные о пользователе для обновления
+            </summary>
+        </member>
+        <member name="T:AdBoard.Contracts.User.UserDto">
+            <summary>
+            Полная информация о пользователе
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.User.UserDto.Id">
+            <summary>
+            Идентификатор
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.User.UserDto.Name">
+            <summary>
+            Имя пользователя
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.User.UserDto.Role">
+            <summary>
+            Роль
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.User.UserDto.Adverts">
+            <summary>
+            Объявления
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.User.UserDto.RegisteredTime">
+            <summary>
+            Дата регистрации
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -32,5 +32,15 @@ public class UserConfiguration : IEntityTypeConfiguration<Domain.User.User>
             .HasForeignKey(c => c.UserId)
             .OnDelete(DeleteBehavior.Cascade)
             .IsRequired(false);
+
+        builder.HasData(new Domain.User.User()
+        {
+            Id = Guid.NewGuid(),
+            Name = "Ametusik",
+            Login = "login",
+            Password = "5F4DCC3B5AA765D61D8327DEB882CF99",
+            Role = "Admin",
+            RegisteredTime = DateTime.UtcNow
+        });
     }
 }
