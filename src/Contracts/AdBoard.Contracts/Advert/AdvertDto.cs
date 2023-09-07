@@ -32,6 +32,11 @@ public class AdvertDto
     public string Description { get; set; }
     
     /// <summary>
+    /// Признак актуальности объявления.
+    /// </summary>
+    public bool IsActive { get; set; }
+    
+    /// <summary>
     /// ID изображений привязанных к объявлению
     /// </summary>
     public IEnumerable<Guid> ImagesIds { get; set; }

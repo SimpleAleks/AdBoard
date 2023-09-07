@@ -16,6 +16,11 @@ public class ShortAdvertDto
     public string Name { get; set; }
     
     /// <summary>
+    /// Признак актуальности объявления.
+    /// </summary>
+    public bool IsActive { get; set; }
+    
+    /// <summary>
     /// Изображения
     /// </summary>
     public IEnumerable<Guid> ImagesIds { get; set; }

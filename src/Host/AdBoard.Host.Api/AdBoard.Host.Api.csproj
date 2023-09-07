@@ -8,7 +8,11 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DocumentationFile>bin\Debug\Documentation.xml</DocumentationFile>
+      <DocumentationFile>AdBoard.Host.Api.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>AdBoard.Host.Api.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -20,6 +24,10 @@
       <ProjectReference Include="..\..\Contracts\AdBoard.Contracts\AdBoard.Contracts.csproj" />
       <ProjectReference Include="..\..\Infrastructure\AdBoard.Infrastructure.DataAccess\AdBoard.Infrastructure.DataAccess.csproj" />
       <ProjectReference Include="..\..\Infrastructure\AdBoard.Infrastructure\AdBoard.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Contracts.xml" />
     </ItemGroup>
 
 </Project>

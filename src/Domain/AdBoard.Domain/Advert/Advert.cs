@@ -33,6 +33,11 @@ public class Advert
     public string? Description { get; set; }
     
     /// <summary>
+    /// Признак актуальности объявления.
+    /// </summary>
+    public bool IsActive { get; set; }
+    
+    /// <summary>
     /// Изображения объявлений
     /// </summary>
     public virtual IEnumerable<Image.Image> Images { get; set; }

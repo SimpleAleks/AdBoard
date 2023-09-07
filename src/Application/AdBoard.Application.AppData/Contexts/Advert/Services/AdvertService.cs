@@ -31,16 +31,9 @@ public class AdvertService : IAdvertService
         _authorizationService = authorizationService;
     }
     
-    public Task<ShortAdvertDto[]> GetAll(CancellationToken cancellationToken)
+    public Task<ShortAdvertDto[]> GetAll(AdvertSearchRequestDto? request, CancellationToken cancellationToken)
     {
-        return _repository.GetAll(cancellationToken);
-    }
-
-    public async Task<ShortAdvertDto[]> GetAllBySearch(string search, CancellationToken cancellationToken)
-    {
-        var trimSearch = search.ToLower().Trim();
-        var result = await _repository.GetAllBySearch(trimSearch, cancellationToken);
-        return result;
+        return _repository.GetAll(request, cancellationToken);
     }
 
     public Task<AdvertDto?> GetById(Guid id, CancellationToken cancellationToken)

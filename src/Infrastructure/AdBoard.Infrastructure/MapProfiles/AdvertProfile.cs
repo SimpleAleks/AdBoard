@@ -19,6 +19,7 @@ public class AdvertProfile : Profile
         CreateMap<CreateAdvertDto, Advert>(MemberList.None)
             .ForMember(x => x.Name, map => map.MapFrom(d => d.Name))
             .ForMember(x => x.Description, map => map.MapFrom(d => d.Description))
+            .ForMember(x => x.IsActive, map => map.MapFrom(d => true))
             .ForMember(x => x.Images, map => map.MapFrom((s, _, _, _) => RequestFilesToImages(s.Images)))
             .ForMember(x => x.Cost, map => map.MapFrom(d => d.Cost))
             .ForMember(x => x.Email, map => map.MapFrom(d => d.Email))
@@ -33,6 +34,7 @@ public class AdvertProfile : Profile
             .ForMember(d => d.Id, map => map.MapFrom(s => s.Id))
             .ForMember(d => d.Name, map => map.MapFrom(s => s.Name))
             .ForMember(d => d.Description, map => map.MapFrom(s => s.Description))
+            .ForMember(x => x.IsActive, map => map.MapFrom(d => d.IsActive))
             .ForMember(d => d.ImagesIds, map => map.MapFrom(s => s.Images.Select(i => (Guid)i.Id!)))
             .ForMember(d => d.Cost, map => map.MapFrom(d => d.Cost))
             .ForMember(d => d.Email, map => map.MapFrom(d => d.Email))
@@ -46,6 +48,7 @@ public class AdvertProfile : Profile
         CreateMap<Advert, ShortAdvertDto>()
             .ForMember(d => d.Id, map => map.MapFrom(s => s.Id))
             .ForMember(d => d.Name, map => map.MapFrom(s => s.Name))
+            .ForMember(x => x.IsActive, map => map.MapFrom(d => d.IsActive))
             .ForMember(d => d.ImagesIds, map => map.MapFrom(s => s.Images.Select(i => (Guid)i.Id!)))
             .ForMember(d => d.Cost, map => map.MapFrom(d => d.Cost));
     }

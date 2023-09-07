@@ -30,8 +30,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo() { Title = "AdBoard API", Version = "v1"});
-    options.IncludeXmlComments(Path.Combine(Path.Combine(AppContext.BaseDirectory, "Documentation.xml")));
-    options.IncludeXmlComments(Path.Combine(Path.Combine(AppContext.BaseDirectory, "Contracts.xml")));
+    options.IncludeXmlComments(Path.Combine(Path.Combine(AppContext.BaseDirectory, "AdBoard.Host.Api.xml")));
+    options.IncludeXmlComments(Path.Combine(Path.Combine(AppContext.BaseDirectory, "AdBoard.Contracts.xml")));
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = @"JWT Authorization header using the Bearer scheme.  
@@ -58,6 +58,16 @@ builder.Services.AddSwaggerGen(options =>
             },
             new List<string>()
         }
+    });
+});
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin();
+        policy.AllowAnyHeader();
+        policy.AllowAnyMethod();
     });
 });
 
@@ -89,6 +99,8 @@ if (app.Environment.IsProduction())
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseCors();
 
 app.MapControllers();
 

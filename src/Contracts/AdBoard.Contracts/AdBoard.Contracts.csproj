@@ -7,7 +7,11 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-      <DocumentationFile>..\..\Host\AdBoard.Host.Api\bin\Debug\net6.0\Contracts.xml</DocumentationFile>
+      <DocumentationFile>AdBoard.Contracts.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>AdBoard.Contracts.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -17,6 +21,9 @@
     <ItemGroup>
       <Reference Include="Microsoft.AspNetCore.Http.Features">
         <HintPath>C:\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\6.0.0\ref\net6.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.AspNetCore.Mvc.Core">
+        <HintPath>C:\Program Files\dotnet\packs\Microsoft.AspNetCore.App.Ref\6.0.0\ref\net6.0\Microsoft.AspNetCore.Mvc.Core.dll</HintPath>
       </Reference>
     </ItemGroup>
 
