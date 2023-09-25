@@ -4,9 +4,15 @@ services:
 
   api:
     container_name: adboard-api
-    build:
-      context: .
-      dockerfile: src/Host/AdBoard.Host.Api/Dockerfile
+    image: prostoaleks/adboard-api:1.0.5
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1000M
+        reservations:
+          cpus: '0.25'
+          memory: 500M
     ports:
       - "5000:80"
     environment:
@@ -19,9 +25,7 @@ services:
 
   migrator:
     container_name: adboard-migrator
-    build:
-      context: .
-      dockerfile: src/Host/AdBoard.Host.Migrator/Dockerfile
+    image: prostoaleks/adboard-migrator:1.0.5
     environment:
       - ConnectionStrings__PostgresAdBoardDb=Server=postgres;Database=adboard;Username=postgres;Password=jsYg59FwKf7H;Port=5432
     networks:
@@ -32,6 +36,14 @@ services:
 
   postgres:
     image: postgres
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 1000M
+        reservations:
+          cpus: '0.25'
+          memory: 500M
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: jsYg59FwKf7H
@@ -44,6 +56,6 @@ services:
 
 volumes:
   pg-data:
-
+    
 networks:
   adboard-network:

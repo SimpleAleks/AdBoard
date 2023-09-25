@@ -65,7 +65,16 @@ public class AuthorizationController : ControllerBase
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Register(CreateUserDto dto, CancellationToken cancellationToken)
     {
-        var result = await _authenticationService.Register(dto, cancellationToken);
-        return await Task.Run(() => CreatedAtAction(nameof(Register), result) , cancellationToken);
+        Guid result;
+        try
+        {
+            result = await _authenticationService.Register(dto, cancellationToken);
+        }
+        catch (InvalidLoginDataException e)
+        {
+            ModelState.AddModelError("login", e.Message);
+            return BadRequest(ModelState);
+        }
+        return CreatedAtAction(nameof(Register), result);
     }
 }
