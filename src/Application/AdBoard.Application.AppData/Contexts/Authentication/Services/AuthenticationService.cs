@@ -36,6 +36,10 @@ public class AuthenticationService : IAuthenticationService
     
     public async Task<Guid> Register(CreateUserDto dto, CancellationToken cancellationToken)
     {
+        if (await _userRepository.FindWhere(x => x.Login == dto.Login, cancellationToken) is not null)
+        {
+            throw new InvalidLoginDataException("Пользователь с таким логином уже существует.");
+        }
         var user = _mapper.Map<User>(dto);
         user.Password = EncryptPassword(dto.Password);
         user.Role = Constants.DefaultAuthorizationRole;
