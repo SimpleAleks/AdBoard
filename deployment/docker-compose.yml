@@ -4,7 +4,7 @@ services:
 
   api:
     container_name: adboard-api
-    image: prostoaleks/adboard-api:1.0.5
+    image: prostoaleks/adboard-api:latest
     deploy:
       resources:
         limits:
@@ -25,7 +25,7 @@ services:
 
   migrator:
     container_name: adboard-migrator
-    image: prostoaleks/adboard-migrator:1.0.5
+    image: prostoaleks/adboard-migrator:latest
     environment:
       - ConnectionStrings__PostgresAdBoardDb=Server=postgres;Database=adboard;Username=postgres;Password=jsYg59FwKf7H;Port=5432
     networks:
