@@ -37,8 +37,6 @@ services:
       POSTGRES_PASSWORD: jsYg59FwKf7H
     volumes:
       - pg-data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
     networks:
       - adboard-network
 
