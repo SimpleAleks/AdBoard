@@ -90,7 +90,16 @@ public class CategoriesController : ControllerBase
         return CreatedAtAction(nameof(Create), result);
     }
 
+    /// <summary>
+    /// Импортирует категории из JSON списка.
+    /// </summary>
+    /// <param name="importCategories">Коллекция категорий.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    /// <response code="200">Категории успешно импортированы.</response>
+    /// <response code="422">Произошёл конфликт бизнес логики.</response>
     [HttpPost("import")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> Import(IEnumerable<ImportCategoryDto> importCategories, CancellationToken cancellationToken)
     {
         try

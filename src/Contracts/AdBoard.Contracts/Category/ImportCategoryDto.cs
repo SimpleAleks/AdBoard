@@ -1,7 +1,7 @@
 ﻿namespace AdBoard.Contracts.Category;
 
 /// <summary>
-/// Инициализирует экземпляр <see cref="ImportCategoryDto"/>.
+/// Модель категории для импорта из JSON.
 /// </summary>
 public class ImportCategoryDto
 {
