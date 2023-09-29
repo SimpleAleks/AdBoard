@@ -24,7 +24,7 @@ jobs:
       run: docker build -f "src/Host/AdBoard.Host.Migrator/Dockerfile" . --push -t prostoaleks/adboard-migrator:latest
 
   deploy:
-    
+    needs: build
     runs-on: ubuntu-latest
     
     steps:
@@ -35,4 +35,9 @@ jobs:
           password: ${{ secrets.SSHKEY }}
           username: ${{ secrets.SSHUSER }}
           script: |
-            ls
+            cd src/AdBoard/deployment && \
+            docker image pull prostoaleks/adboard-api:latest && \
+            docker image pull prostoaleks/adboard-migrator:latest && \
+            docker-compose down && \
+            docker-compose rm -f && \
+            docker-compose up -d --force-recreate
