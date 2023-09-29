@@ -48,4 +48,11 @@ public interface ICategoryService
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Удалена ли категория</returns>
     Task<bool> Delete(Guid id, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Импортирует категории из JSON.
+    /// </summary>
+    /// <param name="importCategories">Категории.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    Task ImportAsync(IEnumerable<ImportCategoryDto> importCategories, CancellationToken cancellationToken);
 }
