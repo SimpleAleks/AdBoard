@@ -16,10 +16,24 @@ jobs:
       uses: docker/login-action@v3.0.0
       with:
         # Username used to log against the Docker registry
-        username: ${{ secrets.dockerUsername }}
+        username: ${{ secrets.DOCKERUSERNAME }}
         # Password or personal access token used to log against the Docker registry
-        password: ${{ secrets.dockerPassword }}
+        password: ${{ secrets.DOCKERPASSWORD }}
     - name: Build and push the API image
       run: docker build -f "src/Host/AdBoard.Host.Api/Dockerfile" . --push -t prostoaleks/adboard-api:latest
     - name: Build and push the Migrator image
       run: docker build -f "src/Host/AdBoard.Host.Migrator/Dockerfile" . --push -t prostoaleks/adboard-migrator:latest
+
+  deploy:
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Deploy through ssh
+        uses: nekiro/ssh-job@main
+        with:
+          host: ${{ secrets.SSHHOST }}
+          key: ${{ secrets.SSHKEY }}
+          user: ${{ secrets.SSHUSER }}
+          command: |
+            ls
