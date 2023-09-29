@@ -16,7 +16,7 @@ jobs:
       uses: docker/login-action@v3.0.0
       with:
         # Username used to log against the Docker registry
-        username: "ProstoAleks"
+        username: "prostoaleks"
         # Password or personal access token used to log against the Docker registry
         password: "h1u3z5docker"
     - name: Build and push the API image
