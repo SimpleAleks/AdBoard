@@ -46,6 +46,17 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
         await DbContext.SaveChangesAsync(cancellationToken);
     }
 
+    /// <inheritdoc />
+    public async Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken)
+    {
+        if (!entities.Any())
+        {
+            throw new ArgumentException("Коллекция сущностей пустая", nameof(entities));
+        }
+        await DbSet.AddRangeAsync(entities, cancellationToken);
+        await DbContext.SaveChangesAsync(cancellationToken);
+    }
+
     /// <inheritdoc/>
     public async Task UpdateAsync(TEntity model, CancellationToken cancellationToken)
     {

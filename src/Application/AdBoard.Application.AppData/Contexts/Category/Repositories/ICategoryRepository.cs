@@ -31,6 +31,13 @@ public interface ICategoryRepository
     /// <param name="cancellationToken">Токен отмены</param>
     /// <returns>Созданная категория <see cref="ShortCategoryDto"/></returns>
     Task<ShortCategoryDto> Add(Category category, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Добавляет коллекцию категорий.
+    /// </summary>
+    /// <param name="entities">Коллекция категорий.</param>
+    /// <param name="cancellationToken">Токен отмены.</param>
+    Task AddRange(IEnumerable<Category> entities, CancellationToken cancellationToken);
     
     /// <summary>
     /// Обновить категорию по модели
