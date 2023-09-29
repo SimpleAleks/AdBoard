@@ -245,6 +245,26 @@
             Id категории выше по иерархии (если есть)
             </summary>
         </member>
+        <member name="T:AdBoard.Contracts.Category.ImportCategoryDto">
+            <summary>
+            Инициализирует экземпляр <see cref="T:AdBoard.Contracts.Category.ImportCategoryDto"/>.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Category.ImportCategoryDto.Id">
+            <summary>
+            Идентификатор категории.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Category.ImportCategoryDto.Name">
+            <summary>
+            Наименование категории.
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Category.ImportCategoryDto.ParentId">
+            <summary>
+            Идентификатор родительской категории.
+            </summary>
+        </member>
         <member name="T:AdBoard.Contracts.Category.ShortCategoryDto">
             <summary>
             Краткое описание категории

@@ -90,6 +90,7 @@ public class CategoriesController : ControllerBase
         return CreatedAtAction(nameof(Create), result);
     }
 
+    [HttpPost("import")]
     public async Task<IActionResult> Import(IEnumerable<ImportCategoryDto> importCategories, CancellationToken cancellationToken)
     {
         try

@@ -59,6 +59,6 @@ public class CategoryService : ICategoryService
     public Task ImportAsync(IEnumerable<ImportCategoryDto> importCategories, CancellationToken cancellationToken)
     {
         var entities = CategoriesHelper.MapImportCategoriesToDomain(importCategories);
-        return _repository.AddRange(entities, cancellationToken);
+        return _repository.AddRange(entities.ToList(), cancellationToken);
     }
 }

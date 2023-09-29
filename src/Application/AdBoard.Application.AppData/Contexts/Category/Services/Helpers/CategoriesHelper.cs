@@ -6,6 +6,7 @@ public static class CategoriesHelper
 {
     public static IEnumerable<Domain.Category.Category> MapImportCategoriesToDomain(IEnumerable<ImportCategoryDto> importCategories)
     {
+        var result = new List<Domain.Category.Category>();
         var parentCategories = importCategories.Where(x => x.ParentId is null);
         foreach (var parentCategory in parentCategories)
         {
@@ -13,9 +14,12 @@ public static class CategoriesHelper
             {
                 Name = parentCategory.Name
             };
-            
-            
+
+            FillCategoryRecursion(parentCategory.Id, parent, importCategories);
+            result.Add(parent);
         }
+
+        return result;
     }
 
     private static Domain.Category.Category FillCategoryRecursion(int topId, Domain.Category.Category category, IEnumerable<ImportCategoryDto> importCategories)
@@ -25,18 +29,14 @@ public static class CategoriesHelper
 
         if (!childs.Any())
         {
-            return new Domain.Category.Category()
-            {
-                Name = importCategories.First(x => x.Id == topId).Name
-            };
+            category.Childs = new List<Domain.Category.Category>();
         }
         else
         {
-            return new Domain.Category.Category()
-            {
-                Name = importCategories.First(x => x.Id == topId).Name,
-                Childs = childs.Select(x => FillCategoryRecursion(x.Id, ))
-            }
+            category.Childs = childs.Select(x =>
+                FillCategoryRecursion(x.Id, new Domain.Category.Category() { Name = x.Name }, importCategories)).ToList();
         }
+
+        return category;
     }
 }
