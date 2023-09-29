@@ -88,6 +88,11 @@
             равно false. Эти объявления могли быть удалены или закрыты продавцом.
             </remarks>
         </member>
+        <member name="P:AdBoard.Contracts.Advert.AdvertSearchRequestDto.Category">
+            <summary>
+            Категория
+            </summary>
+        </member>
         <member name="T:AdBoard.Contracts.Advert.CreateAdvertDto">
             <summary>
             Создание объявления
@@ -146,6 +151,16 @@
         <member name="P:AdBoard.Contracts.Advert.ShortAdvertDto.Name">
             <summary>
             Название
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.ShortAdvertDto.Location">
+            <summary>
+            Геолокация объявления
+            </summary>
+        </member>
+        <member name="P:AdBoard.Contracts.Advert.ShortAdvertDto.CreatedAt">
+            <summary>
+            Дата создания.
             </summary>
         </member>
         <member name="P:AdBoard.Contracts.Advert.ShortAdvertDto.IsActive">

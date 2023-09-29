@@ -48,6 +48,8 @@ public class AdvertProfile : Profile
         CreateMap<Advert, ShortAdvertDto>()
             .ForMember(d => d.Id, map => map.MapFrom(s => s.Id))
             .ForMember(d => d.Name, map => map.MapFrom(s => s.Name))
+            .ForMember(d => d.Location, map => map.MapFrom(s => s.Location))
+            .ForMember(d => d.CreatedAt, map => map.MapFrom(s => s.Created))
             .ForMember(x => x.IsActive, map => map.MapFrom(d => d.IsActive))
             .ForMember(d => d.ImagesIds, map => map.MapFrom(s => s.Images.Select(i => (Guid)i.Id!)))
             .ForMember(d => d.Cost, map => map.MapFrom(d => d.Cost));

@@ -16,6 +16,16 @@ public class ShortAdvertDto
     public string Name { get; set; }
     
     /// <summary>
+    /// Геолокация объявления
+    /// </summary>
+    public string Location { get; set; }
+    
+    /// <summary>
+    /// Дата создания.
+    /// </summary>
+    public DateTime CreatedAt { get; set; }
+    
+    /// <summary>
     /// Признак актуальности объявления.
     /// </summary>
     public bool IsActive { get; set; }

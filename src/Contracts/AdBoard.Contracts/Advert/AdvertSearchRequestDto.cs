@@ -18,4 +18,9 @@ public class AdvertSearchRequestDto
     /// равно false. Эти объявления могли быть удалены или закрыты продавцом.
     /// </remarks>
     public bool? ShowNonActive { get; set; }
+    
+    /// <summary>
+    /// Категория
+    /// </summary>
+    public Guid? Category { get; set; }
 }

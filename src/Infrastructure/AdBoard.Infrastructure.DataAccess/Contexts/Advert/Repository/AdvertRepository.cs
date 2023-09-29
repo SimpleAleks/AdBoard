@@ -39,6 +39,11 @@ public class AdvertRepository : IAdvertRepository
             {
                 query = query.Where(x => x.IsActive);
             }
+
+            if (request.Category is not null)
+            {
+                query = query.Where(x => x.CategoryId == request.Category);
+            }
         }
         
         return query
