@@ -34,6 +34,13 @@ public interface IRepository<TEntity> where TEntity : class
     /// <param name="model">Объект для добавления</param>
     /// <param name="cancellationToken">Токен отмены</param>
     Task AddAsync(TEntity model, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Добавляет коллекцию сущностей <see cref="TEntity"/> в бд
+    /// </summary>
+    /// <param name="entities">Коллекция <see cref="TEntity"/></param>
+    /// <param name="cancellationToken">Токен отмены</param>
+    Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken);
     
     /// <summary>
     /// Обновить объект <see cref="TEntity"/> в бд
@@ -48,4 +55,5 @@ public interface IRepository<TEntity> where TEntity : class
     /// <param name="model">Существующий объект</param>
     /// <param name="cancellationToken">Токен отмены</param>
     Task DeleteAsync(TEntity model, CancellationToken cancellationToken);
+
 }

@@ -42,6 +42,11 @@ public class CategoryRepository : ICategoryRepository
         return _mapper.Map<ShortCategoryDto>(category);
     }
 
+    public Task AddRange(IEnumerable<Category> entities, CancellationToken cancellationToken)
+    {
+        return _repository.AddRangeAsync(entities, cancellationToken);
+    }
+
     public async Task<ShortCategoryDto> Update(Guid id, Category category, CancellationToken cancellationToken)
     {
         category.Id = id;

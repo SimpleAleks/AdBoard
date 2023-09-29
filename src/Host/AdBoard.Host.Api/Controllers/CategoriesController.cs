@@ -90,6 +90,21 @@ public class CategoriesController : ControllerBase
         return CreatedAtAction(nameof(Create), result);
     }
 
+    public async Task<IActionResult> Import(IEnumerable<ImportCategoryDto> importCategories, CancellationToken cancellationToken)
+    {
+        try
+        {
+            await _service.ImportAsync(importCategories, cancellationToken);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Ошибка при импорте категорий из JSON");
+            return UnprocessableEntity();
+        }
+
+        return Ok();
+    }
+
     /// <summary>
     /// Обновляет категорию по модели
     /// </summary>
