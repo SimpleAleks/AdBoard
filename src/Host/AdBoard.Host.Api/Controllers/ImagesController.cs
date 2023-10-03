@@ -42,14 +42,14 @@ public class ImagesController : ControllerBase
     /// <returns>Модель изображения <see cref="ImageDto"/></returns>
     [HttpGet("{id:guid}")]
     [AllowAnonymous]
-    [ProducesResponseType(typeof(ImageDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(FileContentResult), StatusCodes.Status200OK, "image/jpg")]
     [ProducesResponseType(typeof(ErrorDto), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid id, CancellationToken cancellationToken)
     {
         _logger.LogTrace("Request image by id: {Id}", id);
         var result = await _service.GetById(id, cancellationToken);
         if (result is null) return NotFound();
-        return Ok(result);
+        return File(result.Content, "image/jpg");
     }
 
     /// <summary>
