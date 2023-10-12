@@ -1,9 +1,9 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
 using AdBoard.Application.AppData.Contexts.Advert.Repositories;
 using AdBoard.Application.AppData.Contexts.Authentication.Exceptions;
+using AdBoard.Application.AppData.Helpers.Authentication;
 using AdBoard.Contracts.User;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
@@ -41,7 +41,7 @@ public class AuthenticationService : IAuthenticationService
             throw new InvalidLoginDataException("Пользователь с таким логином уже существует.");
         }
         var user = _mapper.Map<User>(dto);
-        user.Password = EncryptPassword(dto.Password);
+        user.Password = AuthenticationHelper.EncryptPassword(dto.Password);
         user.Role = Constants.DefaultAuthorizationRole;
         var result = await _userRepository.Add(user, cancellationToken);
         return result.Id;
@@ -53,7 +53,7 @@ public class AuthenticationService : IAuthenticationService
         
         if (existingUser is null) throw new InvalidLoginDataException();
         
-        var encryptedPassword = EncryptPassword(dto.Password);
+        var encryptedPassword = AuthenticationHelper.EncryptPassword(dto.Password);
         if (existingUser.Password != encryptedPassword) throw new InvalidLoginDataException();
 
         var claims = new List<Claim>()
@@ -81,13 +81,5 @@ public class AuthenticationService : IAuthenticationService
         var result = new JwtSecurityTokenHandler().WriteToken(token);
 
         return result;
-    }
-
-    private string EncryptPassword(string password)
-    {
-        var md5 = MD5.Create();
-        var passBytes = Encoding.UTF8.GetBytes(password);
-        var hashBytes = md5.ComputeHash(passBytes);
-        return Convert.ToHexString(hashBytes);
     }
 }

@@ -2,6 +2,7 @@
 using AdBoard.Application.AppData.Authorization.Requirements.Operation;
 using AdBoard.Application.AppData.Contexts.Advert.Repositories;
 using AdBoard.Application.AppData.Contexts.Advert.Services;
+using AdBoard.Application.AppData.Helpers.Authentication;
 using AdBoard.Contracts.User;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -70,6 +71,7 @@ public class UserService : IUserService
         if (!authorizationResult.Succeeded) throw new UnauthorizedAccessException("User hasn't permissions to this user");
         
         var user = _mapper.Map<User>(dto);
+        user.Password = AuthenticationHelper.EncryptPassword(dto.Password);
         user.Role = userDto.Role;
         return await _repository.Update(id, user, cancellationToken);
     }

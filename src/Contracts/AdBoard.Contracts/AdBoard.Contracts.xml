@@ -247,7 +247,7 @@
         </member>
         <member name="T:AdBoard.Contracts.Category.ImportCategoryDto">
             <summary>
-            Инициализирует экземпляр <see cref="T:AdBoard.Contracts.Category.ImportCategoryDto"/>.
+            Модель категории для импорта из JSON.
             </summary>
         </member>
         <member name="P:AdBoard.Contracts.Category.ImportCategoryDto.Id">
