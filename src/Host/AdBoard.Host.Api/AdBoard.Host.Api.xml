@@ -168,6 +168,15 @@
             <response code="422">Произошёл конфликт бизнес логики</response>
             <returns>Модель созданной категории <see cref="T:AdBoard.Contracts.Category.ShortCategoryDto"/></returns>
         </member>
+        <member name="M:AdBoard.Host.Api.Controllers.CategoriesController.Import(System.Collections.Generic.IEnumerable{AdBoard.Contracts.Category.ImportCategoryDto},System.Threading.CancellationToken)">
+            <summary>
+            Импортирует категории из JSON списка.
+            </summary>
+            <param name="importCategories">Коллекция категорий.</param>
+            <param name="cancellationToken">Токен отмены.</param>
+            <response code="200">Категории успешно импортированы.</response>
+            <response code="422">Произошёл конфликт бизнес логики.</response>
+        </member>
         <member name="M:AdBoard.Host.Api.Controllers.CategoriesController.Update(System.Guid,AdBoard.Contracts.Category.UpdateCategoryDto,System.Threading.CancellationToken)">
             <summary>
             Обновляет категорию по модели
